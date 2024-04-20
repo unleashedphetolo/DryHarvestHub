@@ -10,7 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import "react-native-gesture-handler";
-import Input from "./Input";
+import Input from "../src/components/Input";
 
 
 // Define the home page component
