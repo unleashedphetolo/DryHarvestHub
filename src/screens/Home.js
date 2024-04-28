@@ -3,11 +3,9 @@ import React from "react";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 const categories = [
-  { id: 1, name: "Mango" },
-  { id: 2, name: "Peaches" },
-  { id: 3, name: "Grapes" },
-  { id: 4, name: "Apples" },
-  { id: 5, name: "Apricots " },
+  { id: 1, name: "Fruits" },
+  { id: 2, name: "Vegetables" },
+  
 ];
 
 const products = [
@@ -69,7 +67,7 @@ const Home = ({ navigation }) => {
           DryHarvestHub
         </Text>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>navigation.navigate("Cart")}>
           <View>
             <Ionicons name="cart" size={24} color="black" />
           </View>
