@@ -2,6 +2,7 @@ import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Constants from "expo-constants";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Cart = ({ navigation }) => {
   const [cartItems, setCartItems] = useState([
@@ -71,16 +72,46 @@ const Cart = ({ navigation }) => {
           data={cartItems}
           renderItem={({ item }) => (
             <View style={{ flexDirection: "row", margin: 10 }}>
+              {/* the image */}
               <Image
                 source={{ uri: item.image }}
                 style={{ width: 80, height: 80, borderRadius: 5 }}
               />
+              {/* end f image */}
+
               <View style={{ paddingLeft: 10, flex: 1 }}>
-                <Text
-                  style={{ fontSize: 14, color: "black", fontWeight: "700" }}
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
                 >
-                  {item.title}
-                </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: "black",
+                      fontWeight: "700",
+                      flex: 1,
+                    }}
+                  >
+                    {item.title}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() =>
+                      setCartItems(
+                        cartItems.filter((cartItem) => cartItem.id !== item.id)
+                      )
+                    }
+                  >
+                    <MaterialIcons
+                      name="delete-forever"
+                      size={24}
+                      color="black"
+                      style={{ marginLeft: 10 }}
+                    />
+                  </TouchableOpacity>
+                </View>
+
                 <Text style={{ color: "gray" }}>Fruits</Text>
                 <View
                   style={{
@@ -170,7 +201,10 @@ const Cart = ({ navigation }) => {
           <Text style={{ fontSize: 20, color: "black", fontWeight: "800" }}>
             R{" "}
             {cartItems
-              .reduce((total, { price, quatity }) => (total += price * quatity), 0)
+              .reduce(
+                (total, { price, quatity }) => (total += price * quatity),
+                0
+              )
               .toFixed(2)}
           </Text>
         </View>
