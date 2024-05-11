@@ -1,8 +1,8 @@
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, TextInput, View, TouchableOpacity, Image } from "react-native";
 import React, { Component } from "react";
 import constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const CheckOut = ({ navigation }) => {
   return (
@@ -42,7 +42,14 @@ const CheckOut = ({ navigation }) => {
           padding: 20,
         }}
       >
-        <Text style={{ textAlign: "left", fontWeight: "700", fontSize: 20 }}>
+        <Text
+          style={{
+            marginTop: 50,
+            textAlign: "left",
+            fontWeight: "700",
+            fontSize: 20,
+          }}
+        >
           Payment Method
         </Text>
         <View
@@ -52,18 +59,163 @@ const CheckOut = ({ navigation }) => {
             justifyContent: "space-between",
           }}
         >
-          <View style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}>
-           <View style={{ flexDirection: "row" }}>
-            <Entypo name="credit-card" size={24} color="gold" />
+          <View
+            style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}
+          >
+            <View style={{ alignItems: "center", flexDirection: "row" }}>
+              <View
+                style={{
+                  backgroundColor: "white",
+                  borderRadius: 5,
+                }}
+              >
+                <Image
+                  source={require("../../assets/Mastercard-logo.svg.png")}
+                  style={{ height: 20, width: 27 }}
+                />
+              </View>
 
-            <Text style={{ paddingVertical: 3, paddingHorizontal: 15 }}>
-              Credit Card
-            </Text>
+              <Text style={{ paddingVertical: 3, paddingHorizontal: 15 }}>
+                Credit Card
+              </Text>
             </View>
             <View>
-              <Text style={{ paddingVertical: 3, paddingHorizontal: 15 }}>
+              <Text
+                style={{
+                  marginTop: 15,
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  paddingVertical: 10,
+                  paddingHorizontal: 1,
+                }}
+              >
                 Name on Card
               </Text>
+              <TextInput
+                style={{
+                  height: 40,
+                  borderColor: "gray",
+                  borderWidth: 1,
+                  paddingHorizontal: 10,
+                }}
+                placeholder="Enter name"
+                onChangeText={(text) => {}}
+              />
+              <Text
+                style={{
+                  marginTop: 15,
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  paddingVertical: 10,
+                  paddingHorizontal: 1,
+                }}
+              >
+                Card Number
+              </Text>
+              <TextInput
+                style={{
+                  height: 40,
+                  borderColor: "gray",
+                  borderWidth: 1,
+                  paddingHorizontal: 10,
+                }}
+                placeholder="Enter card number"
+                onChangeText={(text) => {}}
+              />
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <View>
+                  <Text
+                    style={{
+                      marginTop: 15,
+                      fontSize: 15,
+                      fontWeight: "bold",
+                      paddingVertical: 10,
+                      paddingHorizontal: 1,
+                    }}
+                  >
+                    Expiry Date
+                  </Text>
+                  <TextInput
+                    style={{
+                      height: 40,
+                      width: 150,
+                      borderColor: "gray",
+                      borderWidth: 1,
+                      paddingHorizontal: 10,
+                    }}
+                    placeholder="MM/YY"
+                    onChangeText={(text) => {}}
+                  />
+                </View>
+                <View>
+                  <Text
+                    style={{
+                      marginTop: 15,
+                      fontSize: 15,
+                      fontWeight: "bold",
+                      paddingVertical: 10,
+                      paddingHorizontal: 1,
+                    }}
+                  >
+                    Security Code
+                  </Text>
+                  <TextInput
+                    style={{
+                      height: 40,
+                      width: 100,
+                      borderColor: "gray",
+                      borderWidth: 1,
+                      paddingHorizontal: 10,
+                    }}
+                    placeholder="CVC"
+                    onChangeText={(text) => {}}
+                  />
+                </View>
+              </View>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  marginTop: 30,
+                }}
+              >
+                <MaterialCommunityIcons
+                  name="checkbox-marked-circle"
+                  size={24}
+                  color="green"
+                />
+                <Text
+                  style={{
+                    alignItems: "center",
+                    margin: 10,
+                    // fontWeight: 'bold',
+                  }}
+                >
+                  My billing address is the same as my shipping address.
+                </Text>
+              </View>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    paddingVertical: 15,
+                    paddingHorizontal: 60,
+                    backgroundColor: "#108437",
+                    color: "white",
+                    fontSize: 18,
+                    fontWeight: "800",
+                    borderRadius: 5,
+                    marginTop: 100,
+                  }}
+                >
+                  Confirm and Continue
+                </Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
