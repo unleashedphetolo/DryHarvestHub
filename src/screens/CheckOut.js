@@ -52,12 +52,14 @@ const CheckOut = ({ navigation }) => {
             justifyContent: "space-between",
           }}
         >
-          <View style={{ flexDirection: "row", flex: 1, paddingVertical: 30 }}>
-            <Entypo name="credit-card" size={24} color="black" />
+          <View style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}>
+           <View style={{ flexDirection: "row" }}>
+            <Entypo name="credit-card" size={24} color="gold" />
 
             <Text style={{ paddingVertical: 3, paddingHorizontal: 15 }}>
               Credit Card
             </Text>
+            </View>
             <View>
               <Text style={{ paddingVertical: 3, paddingHorizontal: 15 }}>
                 Name on Card
