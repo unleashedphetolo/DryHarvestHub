@@ -210,7 +210,7 @@ const Cart = ({ navigation }) => {
         </View>
 
         <View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={()=>navigation.navigate("CheckOut")}>
             <Text
               style={{
                 paddingVertical: 15,
