@@ -93,10 +93,13 @@ const CheckOut = ({ navigation }) => {
               </Text>
               <TextInput
                 style={{
-                  height: 40,
                   borderColor: "gray",
                   borderWidth: 1,
                   paddingHorizontal: 10,
+                  borderRadius: 5,
+                  padding: 10,
+                  borderWidth: 2,
+                  borderColor: "#bdbdbd",
                 }}
                 placeholder="Enter name"
                 onChangeText={(text) => {}}
@@ -114,10 +117,13 @@ const CheckOut = ({ navigation }) => {
               </Text>
               <TextInput
                 style={{
-                  height: 40,
                   borderColor: "gray",
                   borderWidth: 1,
                   paddingHorizontal: 10,
+                  borderRadius: 5,
+                  padding: 10,
+                  borderWidth: 2,
+                  borderColor: "#bdbdbd",
                 }}
                 placeholder="Enter card number"
                 onChangeText={(text) => {}}
@@ -126,10 +132,10 @@ const CheckOut = ({ navigation }) => {
                 style={{
                   flexDirection: "row",
                   alignItems: "center",
-                  justifyContent: "space-between",
+                  // justifyContent: "",
                 }}
               >
-                <View>
+                <View style={{ flex: 1, marginRight: 15 }}>
                   <Text
                     style={{
                       marginTop: 15,
@@ -143,17 +149,19 @@ const CheckOut = ({ navigation }) => {
                   </Text>
                   <TextInput
                     style={{
-                      height: 40,
-                      width: 150,
                       borderColor: "gray",
                       borderWidth: 1,
                       paddingHorizontal: 10,
+                      borderRadius: 5,
+                      padding: 10,
+                      borderWidth: 2,
+                      borderColor: "#bdbdbd",
                     }}
                     placeholder="MM/YY"
                     onChangeText={(text) => {}}
                   />
                 </View>
-                <View>
+                <View style={{ flex: 1 }}>
                   <Text
                     style={{
                       marginTop: 15,
@@ -167,11 +175,14 @@ const CheckOut = ({ navigation }) => {
                   </Text>
                   <TextInput
                     style={{
-                      height: 40,
-                      width: 100,
+                      width: "100%",
                       borderColor: "gray",
                       borderWidth: 1,
                       paddingHorizontal: 10,
+                      borderRadius: 5,
+                      padding: 10,
+                      borderWidth: 2,
+                      borderColor: "#bdbdbd",
                     }}
                     placeholder="CVC"
                     onChangeText={(text) => {}}
@@ -181,7 +192,6 @@ const CheckOut = ({ navigation }) => {
               <View
                 style={{
                   flexDirection: "row",
-                  alignItems: "center",
                   marginTop: 30,
                 }}
               >
@@ -193,8 +203,8 @@ const CheckOut = ({ navigation }) => {
                 <Text
                   style={{
                     alignItems: "center",
-                    margin: 10,
-                    // fontWeight: 'bold',
+                    marginLeft: 10,
+                    fontWeight: "bold",
                   }}
                 >
                   My billing address is the same as my shipping address.
