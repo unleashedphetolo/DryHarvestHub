@@ -37,6 +37,9 @@ const ProductDetails = ({ route }) => {
       <Text style={{ color: "black", fontWeight: "500" }}>
         R {product.price}
       </Text>
+      <Text style={{ color: "black", fontWeight: "500" }}>
+         {product.description}
+      </Text>
         </View>
 
         <TouchableOpacity >
