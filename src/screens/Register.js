@@ -43,7 +43,7 @@ const Register = ({ navigation }) => {
           </View>
 
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
               <Text
                 style={{
                   textAlign: "center",

@@ -8,6 +8,10 @@ import Register from "./src/screens/Register";
 import ProductDetails from "./src/screens/ProductDetails";
 import Cart from "./src/screens/Cart";
 import CheckOut from "./src/screens/CheckOut";
+import Profile from "./src/screens/Profile";
+import EditProfile from "./src/screens/EditProfile";
+
+
 
 
 // Create a stack navigator
@@ -17,7 +21,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }} 
-      // initialRouteName="Cart"
+       //initialRouteName="Profile"
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
@@ -25,6 +29,9 @@ export default function App() {
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="CheckOut" component={CheckOut} />
+        <Stack.Screen name="Profile" component={Profile} />
+        <Stack.Screen name="EditProfile" component={EditProfile} />
+
 
       </Stack.Navigator>
       <StatusBar style="auto" />

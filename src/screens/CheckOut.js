@@ -44,7 +44,7 @@ const CheckOut = ({ navigation }) => {
       >
         <Text
           style={{
-            marginTop: 50,
+            marginTop: 10,
             textAlign: "left",
             fontWeight: "700",
             fontSize: 20,
@@ -220,7 +220,7 @@ const CheckOut = ({ navigation }) => {
                     fontSize: 18,
                     fontWeight: "800",
                     borderRadius: 5,
-                    marginTop: 100,
+                    marginTop: 120,
                   }}
                 >
                   Confirm and Continue
