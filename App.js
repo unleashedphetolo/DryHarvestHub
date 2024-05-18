@@ -10,6 +10,7 @@ import Cart from "./src/screens/Cart";
 import CheckOut from "./src/screens/CheckOut";
 import Profile from "./src/screens/Profile";
 import EditProfile from "./src/screens/EditProfile";
+import TabNav from "./src/components/TabNav";
 
 
 
@@ -25,7 +26,7 @@ export default function App() {
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Home" component={TabNav} />
         <Stack.Screen name="ProductDetails" component={ProductDetails} />
         <Stack.Screen name="Cart" component={Cart} />
         <Stack.Screen name="CheckOut" component={CheckOut} />

@@ -3,6 +3,9 @@ import React from "react";
 import constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 const Profile = ({ navigation }) => {
   return (
     <View
@@ -168,11 +171,11 @@ const Profile = ({ navigation }) => {
               </View>
 
               <Text style={{ paddingVertical: 3, paddingHorizontal: 15, marginTop: 13,marginRight: 200 }}>
-              Address
+              Help & Support
               </Text>
 
               <TouchableOpacity>
-              <View style={{marginTop: 10}}>
+              <View style={{marginTop: 10, marginLeft:-20}}>
               <Ionicons name="chevron-forward" size={20} color="black" />
               </View>
              </TouchableOpacity>
@@ -194,7 +197,7 @@ const Profile = ({ navigation }) => {
               Log out
               </Text>
              </View>
-
+             
     </View>
     
     </View>
