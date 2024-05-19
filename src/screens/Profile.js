@@ -107,9 +107,9 @@ const Profile = ({ navigation }) => {
       <View
             style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}
           >
-        <View style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 5 }} />
+        <View style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 10 }} />
           
-        <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between" }}>
+        <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginTop: 20 }}>
               <View
                 style={{
                   backgroundColor: "white",

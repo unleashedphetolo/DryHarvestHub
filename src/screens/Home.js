@@ -1,10 +1,13 @@
-import { View, Text, TouchableOpacity, FlatList, Image } from "react-native";
+import { View, Text,TextInput, TouchableOpacity, FlatList, Image } from "react-native";
 import React from "react";
 import Constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
+import { Octicons } from '@expo/vector-icons';
 const categories = [
-  { id: 1, name: "Fruits" },
+  { id: 1, name: "All" },
+  { id: 2, name: "Fruits" },
   { id: 2, name: "Vegetables" },
+
   
 ];
 
@@ -63,7 +66,7 @@ const Home = ({ navigation }) => {
           alignItems: "center",
         }}
       >
-        <Text style={{ color: "black", fontSize: 20, fontWeight: "500" }}>
+        <Text style={{ color: "green", fontSize: 20, fontWeight: "500" }}>
           DryHarvestHub
         </Text>
 
@@ -73,11 +76,48 @@ const Home = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
+      <View style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}>
+      <View style={{
+                  paddingHorizontal: 20,
+                  paddingVertical: 7,
+                  borderRadius: 14,
+                  padding: 10,
+                  borderWidth: 2,
+                  borderColor: "#ECECEC",
+                  marginTop: 15,
+                  flexDirection: "row",
+                  alignItems: "center",
+                  backgroundColor: "#F5F5F5",
 
+                }}>    
+              <Octicons name="search" size={22} color="grey" />
+              <TextInput style={{
+                  fontSize: 15,
+                  fontWeight: "bold",
+                  marginTop: 2,
+                  marginRight: 160,
+                  marginLeft: 10,
+                }}
+                placeholderTextColor="grey"
+                placeholder="Search"
+                onChangeText={(text) => {}}
+              />
+             </View>
+             <Ionicons name="filter" size={24} color="black" />
+              </View>   
       <View style={{ flex: 1 }}>
-        <Text style={{ paddingVertical: 10, color: "gray" }}>
-          Get the best dried fruits from the best producers across south africa
+        <View style={{flexDirection: "row",justifyContent: "space-between"}}>
+        <Text style={{ paddingVertical: 10, color: "black", fontWeight: "500", fontSize: 15 }}>
+          Recommedations
         </Text>
+        <Text style={{ paddingVertical: 10, color: "green", fontWeight: "500", fontSize: 15 }}>
+          See all
+        </Text>
+        </View>
         <View>
           <FlatList
             data={categories}

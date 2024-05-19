@@ -7,9 +7,8 @@ import Search from "../screens/Search";
 import Cart from "../screens/Cart";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
-import { Feather } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';
-
+import { FontAwesome6 } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 const TabNav = () => {
@@ -40,9 +39,9 @@ const TabNav = () => {
       <Tab.Screen name="Search" 
       component={Search} 
       options={{
-        tabBarLabel: 'Search',
+        tabBarLabel: 'Shop',
         tabBarIcon: ({ color, size }) => (
-            <Feather name="search" size={24} color={color} />
+            <FontAwesome6 name="store" size={22} color={color} />   
         ),
       }}
       />
@@ -51,7 +50,7 @@ const TabNav = () => {
       options={{
         tabBarLabel: 'Cart',
         tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="shopping-cart" size={24} color="black" />
+            <FontAwesome5 name="shopping-cart" size={24} color={color} />
         ),
       }}
       />

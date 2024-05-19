@@ -279,7 +279,7 @@ const EditProfile = ({navigation}) => {
                 <Text
                   style={{
                     
-                    paddingVertical: 15,
+                    paddingVertical: 14,
                     paddingHorizontal: 156,
                     backgroundColor: "#108437",
                     color: "white",
