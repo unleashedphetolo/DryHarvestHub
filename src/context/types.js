@@ -1,0 +1,16 @@
+export const REGISTER = "REGISTER";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const SET_USER = "SET_USER";
+export const AUTH_LOADING = "AUTH_LOADING";
+export const USER_LOADING = "USER_LOADING";
+export const LOGIN = "LOGIN";
+export const LOGOUT = "LOGOUT";
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const PRODUCTS_LOADING = "PRODUCTS_LOADING";
+export const ADD_TO_CART = "ADD_TO_CART";
+export const APP_ERROR = "APP_ERROR";
+export const REMOVE_CART_ITEM = "REMOVE_CART_ITEM";
+export const INCREMENT_QUANTITY = "INCREMENT_QUANTITY";
+export const DECREMENT_QUANTITY = "DECREMENT_QUANTITY";
+export const ORDERS_LOADING = "ORDERS_LOADING";
+export const ORDER = "ORDER";

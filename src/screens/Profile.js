@@ -1,12 +1,14 @@
 import { Text, View, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from '@expo/vector-icons';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { FontAwesome5 } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons';
+import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import AuthContext from "../context/auth/authContext";
 const Profile = ({ navigation }) => {
+  const { logout } = useContext(AuthContext);
   return (
     <View
       style={{
@@ -103,103 +105,160 @@ const Profile = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
       </View>
-      
-      <View
-            style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}
+
+      <View style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}>
+        <View
+          style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 10 }}
+        />
+
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 20,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 5,
+            }}
           >
-        <View style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 10 }} />
-          
-        <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginTop: 20 }}>
-              <View
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                }}
-              >
-                <Image
-                  source={require("../../assets/order.png")}
-                  style={{ height: 26, width: 27, marginTop: 15 }}
-                />
-              </View>
+            <Image
+              source={require("../../assets/order.png")}
+              style={{ height: 26, width: 27, marginTop: 15 }}
+            />
+          </View>
 
-              <Text style={{ paddingVertical: 3, paddingHorizontal: 15, marginTop: 12,marginRight: 200 }}>
-              My Orders
-              </Text>
+          <Text
+            style={{
+              paddingVertical: 3,
+              paddingHorizontal: 15,
+              marginTop: 12,
+              marginRight: 200,
+            }}
+          >
+            My Orders
+          </Text>
 
-              <TouchableOpacity>
-              <View style={{marginTop: 10}}>
+          <TouchableOpacity>
+            <View style={{ marginTop: 10 }}>
               <Ionicons name="chevron-forward" size={20} color="black" />
-              </View>
-             </TouchableOpacity>
-             </View> 
-             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between" }}>
-             <View
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                }}
-              >
-                <Image
-                  source={require("../../assets/address.jpg")}
-                  style={{ height: 26, width: 27, marginTop: 15 }}
-                />
-              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 5,
+            }}
+          >
+            <Image
+              source={require("../../assets/address.jpg")}
+              style={{ height: 26, width: 27, marginTop: 15 }}
+            />
+          </View>
 
-              <Text style={{ paddingVertical: 3, paddingHorizontal: 15, marginTop: 13,marginRight: 200 }}>
-              Address
-              </Text>
+          <Text
+            style={{
+              paddingVertical: 3,
+              paddingHorizontal: 15,
+              marginTop: 13,
+              marginRight: 200,
+            }}
+          >
+            Address
+          </Text>
 
-              <TouchableOpacity>
-              <View style={{marginTop: 10}}>
+          <TouchableOpacity>
+            <View style={{ marginTop: 10 }}>
               <Ionicons name="chevron-forward" size={20} color="black" />
-              </View>
-             </TouchableOpacity>
-             </View>
-        
-      <View style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 30 }} />
-              
-      <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginTop: 15 }}>
-             <View
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                }}
-              >
-                <View style={{ height: 26, width: 27, marginTop: 15 }}>
-                <Ionicons name="help-circle-outline" size={26} color="black" />
-                </View>
-              </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-              <Text style={{ paddingVertical: 3, paddingHorizontal: 15, marginTop: 13,marginRight: 200 }}>
-              Help & Support
-              </Text>
+        <View
+          style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 30 }}
+        />
 
-              <TouchableOpacity>
-              <View style={{marginTop: 10, marginLeft:-20}}>
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 15,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 5,
+            }}
+          >
+            <View style={{ height: 26, width: 27, marginTop: 15 }}>
+              <Ionicons name="help-circle-outline" size={26} color="black" />
+            </View>
+          </View>
+
+          <Text
+            style={{
+              paddingVertical: 3,
+              paddingHorizontal: 15,
+              marginTop: 13,
+              marginRight: 200,
+            }}
+          >
+            Help & Support
+          </Text>
+
+          <TouchableOpacity>
+            <View style={{ marginTop: 10, marginLeft: -20 }}>
               <Ionicons name="chevron-forward" size={20} color="black" />
-              </View>
-             </TouchableOpacity>
-             </View>
+            </View>
+          </TouchableOpacity>
+        </View>
 
-             <View style={{ alignItems: "center", flexDirection: "row", justifyContent: "space-between", marginTop: 15 }}>
-             <View
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                }}
-              >
-                <View style={{ height: 26, width: 27, marginTop: 15 }}>
+        <TouchableOpacity onPress={() => logout()}>
+          <View
+            style={{
+              alignItems: "center",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 15,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "white",
+                borderRadius: 5,
+              }}
+            >
+              <View style={{ height: 26, width: 27, marginTop: 15 }}>
                 <MaterialIcons name="logout" size={24} color="black" />
-                </View>
               </View>
+            </View>
 
-              <Text style={{ paddingVertical: 3, paddingHorizontal: 15, marginTop: 13,marginRight: 235 }}>
+            <Text
+              style={{
+                paddingVertical: 3,
+                paddingHorizontal: 15,
+                marginTop: 13,
+                marginRight: 235,
+              }}
+            >
               Log out
-              </Text>
-             </View>
-             
-    </View>
-    
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };

@@ -1,9 +1,25 @@
 import { View, Text, TouchableOpacity, Image } from "react-native";
-import React from "react";
+import React, { useContext,useState } from "react";
 import Constants from "expo-constants";
 import Input from "../components/Input";
+import AuthContext from "../context/auth/authContext";
 
 const Register = ({ navigation }) => {
+  const { register, loading } = useContext(AuthContext);
+
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = () => {
+    const user = {
+      name,
+      email,
+      password,
+    };
+    register(user);
+  };
+
   return (
     <View
       style={{ marginTop: Constants.statusBarHeight, padding: 20, flex: 1 }}
@@ -37,13 +53,28 @@ const Register = ({ navigation }) => {
         </Text>
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
-            <Input icon="person-outline" placeholder="Name" />
-            <Input icon="mail-outline" placeholder="Email" />
-            <Input icon="lock-closed-outline" placeholder="Password" />
+            <Input
+              icon="person-outline"
+              placeholder="Name"
+              setValue={setName}
+              value={name}
+            />
+            <Input
+              icon="mail-outline"
+              placeholder="Email"
+              setValue={setEmail}
+              value={email}
+            />
+            <Input
+              icon="lock-closed-outline"
+              placeholder="Password"
+              setValue={setPassword}
+              value={password}
+            />
           </View>
 
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate("Profile")}>
+            <TouchableOpacity onPress={handleRegister}>
               <Text
                 style={{
                   textAlign: "center",
@@ -55,7 +86,7 @@ const Register = ({ navigation }) => {
                   borderRadius: 5,
                 }}
               >
-                Register
+                {loading ? "Loading..." : "Register"}
               </Text>
             </TouchableOpacity>
 

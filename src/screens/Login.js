@@ -1,9 +1,22 @@
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import Input from "../components/Input";
+import AuthContext from "../context/auth/authContext";
 
 const Login = ({ navigation }) => {
+  const { login, loading } = useContext(AuthContext);
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = () => {
+    const user = {
+      email,
+      password,
+    };
+    login(user);
+  };
   return (
     <View
       style={{ marginTop: Constants.statusBarHeight, padding: 20, flex: 1 }}
@@ -37,8 +50,18 @@ const Login = ({ navigation }) => {
         </Text>
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
-            <Input icon="mail-outline" placeholder="Email" />
-            <Input icon="lock-closed-outline" placeholder="Password" />
+            <Input
+              icon="mail-outline"
+              placeholder="Email"
+              setValue={setEmail}
+              value={email}
+            />
+            <Input
+              icon="lock-closed-outline"
+              placeholder="Password"
+              setValue={setPassword}
+              value={password}
+            />
             <Text
               style={{ color: "blue", paddingVertical: 10, textAlign: "right" }}
             >
@@ -46,7 +69,7 @@ const Login = ({ navigation }) => {
             </Text>
           </View>
           <View>
-            <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            <TouchableOpacity onPress={handleLogin}>
               <Text
                 style={{
                   textAlign: "center",
@@ -58,7 +81,7 @@ const Login = ({ navigation }) => {
                   borderRadius: 5,
                 }}
               >
-                Log In
+                {loading ? "Loading..." : "Log In"}
               </Text>
             </TouchableOpacity>
 

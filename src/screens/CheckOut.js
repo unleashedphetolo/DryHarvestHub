@@ -1,10 +1,33 @@
 import { Text, TextInput, View, TouchableOpacity, Image } from "react-native";
-import React, { Component } from "react";
+import React, { Component, useContext, useState } from "react";
 import constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AppContext from "../context/app/appContext";
+import AuthContext from "../context/auth/authContext";
 
 const CheckOut = ({ navigation }) => {
+  const { user } = useContext(AuthContext);
+  const { cart } = useContext(AppContext);
+  const [cardNumber, setCardNumber] = useState("");
+  const [exDate, setExDate] = useState("");
+  const [cvv, setCvv] = useState("");
+  const [name, setName] = useState(user.name);
+  const { order } = useContext(AppContext);
+
+  const handleOrder = () => {
+    if (cardNumber == "" && exDate == "" && cvv == "" && name == "")
+      console.log("Hello");
+    const orderItem = {
+      items: cart,
+      name: user.name,
+      email: user.email,
+      userId: user.id,
+    };
+
+    order(orderItem, navigation);
+  };
+
   return (
     <View
       style={{
@@ -102,7 +125,8 @@ const CheckOut = ({ navigation }) => {
                   borderColor: "#bdbdbd",
                 }}
                 placeholder="Enter name"
-                onChangeText={(text) => {}}
+                onChangeText={(text) => setName(text)}
+                value={name}
               />
               <Text
                 style={{
@@ -126,7 +150,8 @@ const CheckOut = ({ navigation }) => {
                   borderColor: "#bdbdbd",
                 }}
                 placeholder="Enter card number"
-                onChangeText={(text) => {}}
+                onChangeText={(text) => setCardNumber(text)}
+                value={cardNumber}
               />
               <View
                 style={{
@@ -158,7 +183,8 @@ const CheckOut = ({ navigation }) => {
                       borderColor: "#bdbdbd",
                     }}
                     placeholder="MM/YY"
-                    onChangeText={(text) => {}}
+                    onChangeText={(text) => setExDate(text)}
+                    value={exDate}
                   />
                 </View>
                 <View style={{ flex: 1 }}>
@@ -185,7 +211,8 @@ const CheckOut = ({ navigation }) => {
                       borderColor: "#bdbdbd",
                     }}
                     placeholder="CVC"
-                    onChangeText={(text) => {}}
+                    onChangeText={(text) => setCvv(text)}
+                    value={cvv}
                   />
                 </View>
               </View>
@@ -210,7 +237,7 @@ const CheckOut = ({ navigation }) => {
                   My billing address is the same as my shipping address.
                 </Text>
               </View>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={handleOrder}>
                 <Text
                   style={{
                     paddingVertical: 15,
