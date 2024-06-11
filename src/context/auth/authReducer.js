@@ -35,6 +35,7 @@ export default (state, action) => {
         ...state,
         userLoading: false,
         loading: false,
+        user: null
       };
 
     case REGISTER:

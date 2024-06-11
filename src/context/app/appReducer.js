@@ -8,6 +8,8 @@ import {
   ADD_TO_CART,
   ORDERS_LOADING,
   ORDER,
+  ADD_PRODUCT,
+  GET_PRODUCER_PRODUCTS,
 } from "../types";
 
 export default (state, action) => {
@@ -34,12 +36,24 @@ export default (state, action) => {
         products: action.payload,
         productsLoading: false,
       };
+    case GET_PRODUCER_PRODUCTS:
+      return {
+        ...state,
+        producerProducts: action.payload,
+        productsLoading: false,
+      };
+    case ADD_PRODUCT:
+      return {
+        ...state,
+        producerProducts: [...state.products, action.payload],
+        productsLoading: false,
+      };
 
     case APP_ERROR:
       return {
         ...state,
         productsLoading: false,
-        ordersLoading: false
+        ordersLoading: false,
       };
 
     case ADD_TO_CART:

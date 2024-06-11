@@ -5,7 +5,6 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
-  updateProfile,
 } from "firebase/auth";
 import {
   AUTH_ERROR,
@@ -16,7 +15,8 @@ import {
   SET_USER,
   USER_LOADING,
 } from "../types";
-import { auth } from "../../firebase/config";
+import { auth, db } from "../../firebase/config";
+import { collection, doc, getDoc, setDoc } from "firebase/firestore";
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -27,16 +27,20 @@ const AuthState = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, initialState);
 
   // Register
-  const register = (user) => {
+  const register = (user, type) => {
     setAuthLoading();
     createUserWithEmailAndPassword(auth, user.email, user.password)
       .then((credentials) => {
-        updateProfile(credentials.user, { displayName: user.name })
-          .then(() => console.log("name saved"))
+        setDoc(doc(db, "profile", credentials.user.uid), {
+          name: user.name,
+          type,
+        })
+          .then(() => console.log("profile saved"))
           .catch((error) => console.log(error));
         dispatch({ type: REGISTER });
       })
       .catch((err) => {
+        console.log(err);
         if (err.code === "auth/email-already-in-use") {
           console.error("That email address is already in use!");
         }
@@ -51,17 +55,24 @@ const AuthState = ({ children }) => {
 
   // Set User
   const setUser = async (user) => {
+    console.log(user);
     if (user) {
-      const { email, displayName, uid } = user;
-
-      dispatch({
-        type: SET_USER,
-        payload: {
-          name: displayName,
-          email,
-          id: uid,
-        },
-      });
+      const { email, uid } = user;
+      const profile = await getDoc(doc(db, "profile", uid));
+      console.log(profile);
+      if (profile.exists()) {
+        console.log(profile.data());
+        dispatch({
+          type: SET_USER,
+          payload: {
+            ...profile.data(),
+            email,
+            id: uid,
+          },
+        });
+      } else {
+        dispatch({ type: AUTH_ERROR });
+      }
     } else {
       dispatch({ type: AUTH_ERROR });
     }
@@ -87,6 +98,7 @@ const AuthState = ({ children }) => {
     signInWithEmailAndPassword(auth, user.email, user.password)
       .then(() => dispatch({ type: LOGIN }))
       .catch((err) => {
+        console.log(err);
         if (err.code === "auth/user-not-found") {
           console.error("well user not found");
         }

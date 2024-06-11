@@ -3,12 +3,10 @@ import React, { useContext } from "react";
 import constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
 import AuthContext from "../context/auth/authContext";
 const Profile = ({ navigation }) => {
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
+
   return (
     <View
       style={{
@@ -73,7 +71,7 @@ const Profile = ({ navigation }) => {
           marginTop: 8,
         }}
       >
-        Elaine Levine
+        {user?.name}
       </Text>
       <Text
         style={{
@@ -83,7 +81,7 @@ const Profile = ({ navigation }) => {
           color: "grey",
         }}
       >
-        @elainelevine
+        {user?.email}
       </Text>
       <View
         style={{ flexDirection: "row", alignItems: "center", marginLeft: 97 }}

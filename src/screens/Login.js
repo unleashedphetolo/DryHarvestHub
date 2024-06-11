@@ -3,19 +3,21 @@ import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import Input from "../components/Input";
 import AuthContext from "../context/auth/authContext";
+import TypeSelector from "../components/TypeSelector";
 
 const Login = ({ navigation }) => {
   const { login, loading } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [type, setType] = useState("Consumer");
 
   const handleLogin = () => {
     const user = {
       email,
       password,
     };
-    login(user);
+    login(user, type);
   };
   return (
     <View
@@ -48,6 +50,8 @@ const Login = ({ navigation }) => {
         <Text style={{ textAlign: "center", fontWeight: "700", fontSize: 20 }}>
           DryHarvestHub
         </Text>
+
+        <TypeSelector type={type} setType={setType} />
         <View style={{ flex: 1, justifyContent: "space-between" }}>
           <View>
             <Input

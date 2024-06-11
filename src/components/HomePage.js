@@ -10,8 +10,7 @@ import {
   TextInput,
 } from "react-native";
 import "react-native-gesture-handler";
-import Input from "../src/components/Input";
-
+import Input from "./Input";
 
 // Define the home page component
 const HomePage = ({ navigation }) => {
@@ -26,17 +25,18 @@ const HomePage = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require("../assets/DryFood.webp")}
+      source={require("../../assets/DryFood.webp")}
       style={styles.backgroundImage}
     >
       <View style={styles.container}>
-        <View style={{ alignItems: "center", }}>
-          <View style={{backgroundColor: 'white', padding: 10,borderRadius: 5}}>
-
-          <Image
-            source={require("../assets/DryFoodLogo.jpg")}
-            style={styles.logo}
-          />
+        <View style={{ alignItems: "center" }}>
+          <View
+            style={{ backgroundColor: "white", padding: 10, borderRadius: 5 }}
+          >
+            <Image
+              source={require("../../assets/DryFoodLogo.jpg")}
+              style={styles.logo}
+            />
           </View>
         </View>
 
@@ -108,8 +108,6 @@ const HomePage = ({ navigation }) => {
               Forgot Password?
             </Text>
 
-           
-           
             <TouchableOpacity>
               <Text
                 style={{

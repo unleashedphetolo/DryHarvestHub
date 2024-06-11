@@ -15,6 +15,7 @@ import { auth } from "../firebase/config";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import Loading from "./Loading";
+import AddProduct from "../screens/AddProduct";
 // Create a stack navigator
 const Stack = createStackNavigator();
 
@@ -42,6 +43,7 @@ const MainNavigator = () => {
             <Stack.Screen name="CheckOut" component={CheckOut} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
+            <Stack.Screen name="AddProduct" component={AddProduct} />
           </>
         ) : (
           <>
