@@ -16,6 +16,9 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import Loading from "./Loading";
 import AddProduct from "../screens/AddProduct";
+import Payment from "../screens/Payment";
+import Orders from "../screens/Orders";
+
 // Create a stack navigator
 const Stack = createStackNavigator();
 
@@ -41,6 +44,8 @@ const MainNavigator = () => {
             <Stack.Screen name="ProductDetails" component={ProductDetails} />
             <Stack.Screen name="Cart" component={Cart} />
             <Stack.Screen name="CheckOut" component={CheckOut} />
+            <Stack.Screen name="Payment" component={Payment} />
+            <Stack.Screen name="Orders" component={Orders} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="AddProduct" component={AddProduct} />

@@ -5,6 +5,7 @@ import {
   ADD_TO_CART,
   APP_ERROR,
   DECREMENT_QUANTITY,
+  GET_ORDERS,
   GET_PRODUCER_PRODUCTS,
   GET_PRODUCTS,
   INCREMENT_QUANTITY,
@@ -17,19 +18,39 @@ import AppReducer from "./appReducer";
 import { db } from "../../firebase/config";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import Orders from "../../screens/Orders";
 
 const AppState = ({ children }) => {
   const initialState = {
+    ordersLoading: false,
     products: [],
     producerProducts: [],
     productsLoading: false,
     cart: [],
+    orders: [],
   };
   const [state, dispatch] = useReducer(AppReducer, initialState);
   const productsCollection = collection(db, "products");
   const ordersCollection = collection(db, "orders");
   const storage = getStorage();
 
+  // get orders
+  const getOrders = async (id) => {
+    setOrdersLoading();
+    try {
+      const querySnapshot = await getDocs(
+        query(ordersCollection, where("userId", "==", id))
+      );
+      const orders = [];
+      querySnapshot.forEach((doc) => {
+        orders.push({ id: doc.id, ...doc.data() });
+      });
+
+      dispatch({ type: GET_ORDERS, payload: orders });
+    } catch (error) {
+      console.log("Err", error);
+    }
+  };
   // get products
   const getProducts = async () => {
     setProductsLoading();
@@ -95,7 +116,6 @@ const AppState = ({ children }) => {
   const createProduct = async (product, navigation) => {
     setProductsLoading();
     try {
- 
       const imageRef = ref(
         storage,
         "images/" + new Date().valueOf() + "_" + product.image.name
@@ -128,10 +148,12 @@ const AppState = ({ children }) => {
   return (
     <AppContext.Provider
       value={{
+        ordersLoading: state.ordersLoading,
         productsLoading: state.productsLoading,
         products: state.products,
         producerProducts: state.producerProducts,
         cart: state.cart,
+        orders: state.orders,
         getProducts,
         addToCart,
         removeCartItem,
@@ -140,6 +162,7 @@ const AppState = ({ children }) => {
         order,
         createProduct,
         getProducerProducts,
+        getOrders,
       }}
     >
       {children}

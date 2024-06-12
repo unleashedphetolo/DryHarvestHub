@@ -1,6 +1,6 @@
-import { View, Text, Touchable, Image } from "react-native";
+import { View, Text, Image } from "react-native";
 import React, { useContext, useState } from "react";
-import constants from "expo-constants";
+import Constants from "expo-constants";
 import Input from "../components/Input";
 import * as ImagePicker from "expo-image-picker";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -25,20 +25,20 @@ const AddProduct = ({ navigation }) => {
     });
 
     if (!result.canceled) {
-        console.log(result);
       const img = {
         uri: result.assets[0].uri,
         type: result.assets[0].type,
         name: result.assets[0].fileName,
       };
-      const res = await fetch(img.uri, { mode: 'cors' });
-  
-      const blob = res.blob();
+
+      const res = await fetch(img.uri);
+      const blob = await res.blob();
       img.blob = blob;
 
       setImage(img);
     }
   };
+
   const handleAdd = () => {
     const product = {
       image,
@@ -55,7 +55,7 @@ const AddProduct = ({ navigation }) => {
   return (
     <View
       style={{
-        marginTop: constants.statusBarHeight,
+        marginTop: Constants.statusBarHeight,
         padding: 20,
         flex: 1,
         backgroundColor: "white",

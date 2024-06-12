@@ -21,7 +21,7 @@ const TabNav = () => {
         headerShown: false,
         tabBarActiveTintColor: "green",
       }}
-      initialRouteName="ProducerProducts"
+      initialRouteName="Home"
     >
       <Tab.Screen
         name="Home"

@@ -117,18 +117,25 @@ const Profile = ({ navigation }) => {
             marginTop: 20,
           }}
         >
+          <TouchableOpacity onPress={() => navigation.navigate("Orders")}>
+          <View style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}>
           <View
             style={{
               backgroundColor: "white",
               borderRadius: 5,
             }}
           >
+            
             <Image
               source={require("../../assets/order.png")}
               style={{ height: 26, width: 27, marginTop: 15 }}
             />
           </View>
-
+          <View>
           <Text
             style={{
               paddingVertical: 3,
@@ -139,7 +146,9 @@ const Profile = ({ navigation }) => {
           >
             My Orders
           </Text>
-
+          </View>
+          </View>
+         </TouchableOpacity>
           <TouchableOpacity>
             <View style={{ marginTop: 10 }}>
               <Ionicons name="chevron-forward" size={20} color="black" />

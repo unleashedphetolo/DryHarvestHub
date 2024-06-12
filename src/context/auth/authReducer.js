@@ -1,6 +1,7 @@
 import {
   AUTH_ERROR,
   AUTH_LOADING,
+  GET_ORDERS,
   LOGIN,
   LOGOUT,
   REGISTER,
@@ -16,6 +17,7 @@ export default (state, action) => {
         loading: true,
       };
 
+      
     case USER_LOADING:
       return {
         ...state,

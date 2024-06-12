@@ -15,18 +15,6 @@ const CheckOut = ({ navigation }) => {
   const [name, setName] = useState(user.name);
   const { order } = useContext(AppContext);
 
-  const handleOrder = () => {
-    if (cardNumber == "" && exDate == "" && cvv == "" && name == "")
-      console.log("Hello");
-    const orderItem = {
-      items: cart,
-      name: user.name,
-      email: user.email,
-      userId: user.id,
-    };
-
-    order(orderItem, navigation);
-  };
 
   return (
     <View
@@ -237,7 +225,7 @@ const CheckOut = ({ navigation }) => {
                   My billing address is the same as my shipping address.
                 </Text>
               </View>
-              <TouchableOpacity onPress={handleOrder}>
+              < TouchableOpacity onPress={() => navigation.navigate("Payment", {cardNumber,exDate,cvv,name })}>
                 <Text
                   style={{
                     paddingVertical: 15,

@@ -10,6 +10,7 @@ import {
   ORDER,
   ADD_PRODUCT,
   GET_PRODUCER_PRODUCTS,
+  GET_ORDERS,
 } from "../types";
 
 export default (state, action) => {
@@ -19,6 +20,13 @@ export default (state, action) => {
         ...state,
         productsLoading: true,
       };
+
+      case GET_ORDERS:
+      return {
+        ...state,
+        ordersLoading: false,
+        orders: action.payload,
+      };
 
     case ORDERS_LOADING:
       return {
