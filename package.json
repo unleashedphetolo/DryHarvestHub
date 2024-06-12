@@ -16,7 +16,7 @@
     "@react-navigation/native": "^6.1.14",
     "@react-navigation/stack": "^6.3.25",
     "@rneui/themed": "^4.0.0-rc.8",
-    "expo": "^51.0.0",
+    "expo": "~51.0.12",
     "expo-image-picker": "~15.0.5",
     "expo-status-bar": "~1.12.1",
     "firebase": "^10.12.0",
