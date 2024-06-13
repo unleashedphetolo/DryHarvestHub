@@ -10,12 +10,12 @@ const Payment = ({navigation}) => {
 
   console.log(cart);
   const [data] = useState({
-    merchant_id: "10000100",
-    merchant_key: "46f0cd694581a",
-    return_url: "https://payfast.io#success",
-    cancel_url: "https://payfast.io#cancel",
-    notify_url: "https://payfast.io/",
-    m_payment_id: "1234",
+    merchant_id: "11467929",
+    merchant_key: "1so4eyhpghhi7",
+    return_url: "http://hmpengineering.co.za/done",
+    cancel_url: "http://hmpengineering.co.za/fail",
+    notify_url: "http://hmpengineering.co.za/",
+    m_payment_id: Math.random(),
     amount:cart
         .reduce(
           (total, { price, quantity }) => (total += price * quantity),
@@ -28,7 +28,7 @@ const Payment = ({navigation}) => {
     name_last:"",
     email_address: user.email,
     cell_number: "0760448944",
-    passphrase: "jt7NOE43FZPn",
+    passphrase: "HmpEngineeringSolutions2023",
   });
   const [paystate, setPaystate] = useState(true);
 
@@ -55,7 +55,7 @@ const Payment = ({navigation}) => {
             zIndex: 1,
           }}
           source={{
-            uri: "https://sandbox.payfast.co.za/eng/process",
+            uri: "https://www.payfast.co.za/eng/process",
             body: `merchant_id=${data.merchant_id}&merchant_key=${data.merchant_key}&return_url=${data.return_url}&cancel_url=${data.cancel_url}&notify_url=${data.notify_url}&m_payment_id=${data.m_payment_id}&amount=${data.amount}&item_name=${data.item_name}&item_description=${data.item_description}&name_first=${data.name_first}&name_last=${data.name_last}&email_address=${data.email_address}&cell_number=${data.cell_number}&passphrase=${data.passphrase}`,
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
