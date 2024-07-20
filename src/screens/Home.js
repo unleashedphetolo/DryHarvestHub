@@ -6,7 +6,6 @@ import {
   FlatList,
   Image,
   StyleSheet,
-  Modal,
   Button,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
@@ -15,6 +14,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import AppContext from "../context/app/appContext";
 import Loading from "../components/Loading";
+import { Modal } from "react-native";
 
 const categories = [
   { id: 1, name: "All" },
@@ -35,10 +35,13 @@ const Home = ({ navigation }) => {
   const filteredProducts = products.filter((product) => {
     const inCategory =
       selectedCategory === "All" ||
-      (selectedCategory === "Fruits" && product.category === "Fruits") ||
-      (selectedCategory === "Vegetables" && product.category === "Vegetables");
+      (selectedCategory.toLowerCase() === "fruits" &&
+        product.category.toLowerCase() === "fruits") ||
+      (selectedCategory.toLowerCase() === "vegetables" &&
+        product.category.toLowerCase() === "vegetables");
     return (
-      inCategory && product.title.toLowerCase().includes(searchText.toLowerCase())
+      inCategory &&
+      product.title.toLowerCase().includes(searchText.toLowerCase())
     );
   });
 
@@ -59,11 +62,35 @@ const Home = ({ navigation }) => {
           <Ionicons name="cart" size={24} color="black" />
         </TouchableOpacity>
       </View>
-      <View style={styles.searchContainer}>
-        <View style={styles.searchBox}>
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          paddingRight: 20,
+        }}
+      >
+        <View
+          style={{
+            borderRadius: 14,
+            borderWidth: 2,
+            borderColor: "#ECECEC",
+            marginTop: 15,
+            flexDirection: "row",
+            alignItems: "center",
+            backgroundColor: "#F5F5F5",
+            marginRight: 5,
+            padding: 5,
+          }}
+        >
           <Octicons name="search" size={22} color="grey" />
           <TextInput
-            style={styles.searchInput}
+            style={{
+              fontSize: 15,
+              fontWeight: "bold",
+              flex: 1,
+              padding: 5,
+            }}
             placeholderTextColor="grey"
             placeholder="Search"
             onChangeText={(text) => setSearchText(text)}
@@ -75,29 +102,32 @@ const Home = ({ navigation }) => {
       </View>
       <View style={styles.recommendationsHeader}>
         <Text style={styles.recommendationsText}>Recommendations</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>setSelectedCategory("All")}>
           <Text style={styles.seeAllText}>See all</Text>
         </TouchableOpacity>
       </View>
-      <FlatList
-        data={categories}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => setSelectedCategory(item.name)}>
-            <View
-              style={[
-                styles.categoryItem,
-                selectedCategory === item.name && styles.categoryItemSelected,
-              ]}
-            >
-              <Text style={styles.categoryItemText}>{item.name}</Text>
-            </View>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-        horizontal
-        ItemSeparatorComponent={<View style={{ padding: 5 }} />}
-        showsHorizontalScrollIndicator={false}
-      />
+
+      <View style={{ marginBottom: 10 }}>
+        <FlatList
+          data={categories}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => setSelectedCategory(item.name)}>
+              <View
+                style={[
+                  styles.categoryItem,
+                  selectedCategory === item.name && styles.categoryItemSelected,
+                ]}
+              >
+                <Text style={styles.categoryItemText}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+          horizontal
+          ItemSeparatorComponent={<View style={{ padding: 5 }} />}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
       <View style={styles.productList}>
         {productsLoading ? (
           <Loading />
@@ -141,7 +171,6 @@ const Home = ({ navigation }) => {
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Filter Options</Text>
             <View style={styles.modalButtons}>
-             
               <Button
                 title="All"
                 onPress={() => handleCategorySelect("All")}
@@ -157,11 +186,7 @@ const Home = ({ navigation }) => {
                 onPress={() => handleCategorySelect("Vegetables")}
                 color={selectedCategory === "Vegetables" ? "green" : "grey"}
               />
-               <Button
-                title="Close"
-                onPress={toggleFilterModal}
-                color="grey"
-              />
+              <Button title="Close" onPress={toggleFilterModal} color="grey" />
             </View>
           </View>
         </View>
@@ -240,7 +265,6 @@ const styles = StyleSheet.create({
   },
   productList: {
     flex: 1,
-    marginTop: -480,
   },
   productRow: {
     justifyContent: "space-between",

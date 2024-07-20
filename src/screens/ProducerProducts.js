@@ -4,26 +4,26 @@ import constants from "expo-constants";
 import AppContext from "../context/app/appContext";
 import AuthContext from "../context/auth/authContext";
 
-const products = [
-  {
-    id: 1,
-    title: "Mango Chunks - Great Value 400g",
-    price: 129.9,
-    description:
-      " Mango Chunks are a sweet delicious mixture of mango pieces, strips and chunks. They are partly dried to sweet-tart perfection. ",
-    image:
-      "https://www.thespruceeats.com/thmb/jMn1JBmk4h0xR_0hgche6xnjZ3I=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/what-is-freeze-dried-fruit-5193827-still-life-3d85d69de7d0457da8a85e1a98879929.jpg",
-  },
-  {
-    id: 5,
-    title: "Prunes Pitted - Choice Grade 450g",
-    price: 129.9,
-    description:
-      "Prunes are sweet and juicy, making them ideal for snacking and cooking. Your grandmother’s favourites are the best natural laxative on the market and has been proven to promote gut health.",
-    image:
-      "https://www.thespruceeats.com/thmb/jMn1JBmk4h0xR_0hgche6xnjZ3I=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/what-is-freeze-dried-fruit-5193827-still-life-3d85d69de7d0457da8a85e1a98879929.jpg",
-  },
-];
+// const products = [
+//   {
+//     id: 1,
+//     title: "Mango Chunks - Great Value 400g",
+//     price: 129.9,
+//     description:
+//       " Mango Chunks are a sweet delicious mixture of mango pieces, strips and chunks. They are partly dried to sweet-tart perfection. ",
+//     image:
+//       "https://www.thespruceeats.com/thmb/jMn1JBmk4h0xR_0hgche6xnjZ3I=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/what-is-freeze-dried-fruit-5193827-still-life-3d85d69de7d0457da8a85e1a98879929.jpg",
+//   },
+//   {
+//     id: 5,
+//     title: "Prunes Pitted - Choice Grade 450g",
+//     price: 129.9,
+//     description:
+//       "Prunes are sweet and juicy, making them ideal for snacking and cooking. Your grandmother’s favourites are the best natural laxative on the market and has been proven to promote gut health.",
+//     image:
+//       "https://www.thespruceeats.com/thmb/jMn1JBmk4h0xR_0hgche6xnjZ3I=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/what-is-freeze-dried-fruit-5193827-still-life-3d85d69de7d0457da8a85e1a98879929.jpg",
+//   },
+// ];
 
 const ProducerProducts = ({ navigation }) => {
   const {

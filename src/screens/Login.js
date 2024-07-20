@@ -49,6 +49,7 @@ const Login = ({ navigation }) => {
               placeholder="Password"
               setValue={setPassword}
               value={password}
+              secureTextEntry={true}
             />
             <Text style={styles.forgotPassword}>Forgot Password?</Text>
           </View>

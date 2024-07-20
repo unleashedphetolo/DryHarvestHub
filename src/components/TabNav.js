@@ -11,6 +11,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { FontAwesome6 } from "@expo/vector-icons";
 import AuthContext from "../context/auth/authContext";
 import ProducerProducts from "../screens/ProducerProducts";
+import ProducerRegistration from "../screens/ProducerRegistration";
 
 const Tab = createBottomTabNavigator();
 const TabNav = () => {
@@ -43,7 +44,7 @@ const TabNav = () => {
           ),
         }}
       />
-      {user.type == "Producer" ? (
+      {user?.type == "Producer" ? (
         <Tab.Screen
           name="ProducerProducts"
           component={ProducerProducts}

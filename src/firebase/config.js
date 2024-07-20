@@ -20,4 +20,4 @@ const auth = initializeAuth(app, {
 });
 // const auth = getAuth(app);
 
-export { db, auth };
+export { db, auth,app };

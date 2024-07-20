@@ -2,7 +2,7 @@ import { View, Text, TextInput } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-const Input = ({ placeholder, icon, setValue, value }) => {
+const Input = ({ placeholder, icon, setValue, value,secureTextEntry }) => {
   return (
     <View
       style={{
@@ -27,6 +27,7 @@ const Input = ({ placeholder, icon, setValue, value }) => {
         placeholderTextColor={"grey"}
         onChangeText={(text) => setValue(text)}
         value={value}
+        secureTextEntry={secureTextEntry}
       />
     </View>
   );

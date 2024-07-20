@@ -1,4 +1,4 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Pic } from "react-native";
 import React, { useContext, useState } from "react";
 import Constants from "expo-constants";
 import Input from "../components/Input";
@@ -6,6 +6,7 @@ import * as ImagePicker from "expo-image-picker";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import AppContext from "../context/app/appContext";
 import AuthContext from "../context/auth/authContext";
+import { Picker } from "@react-native-picker/picker";
 
 const AddProduct = ({ navigation }) => {
   const [image, setImage] = useState(null);
@@ -94,7 +95,26 @@ const AddProduct = ({ navigation }) => {
           value={description}
         />
         <Input placeholder="Price" setValue={setPrice} value={price} />
-        <Input placeholder="Category" setValue={setCategory} value={category} />
+        {/* <Input placeholder="Category" setValue={setCategory} value={category} /> */}
+        <View
+          style={{
+            marginTop: 20,
+            borderWidth: 2,
+            borderRadius: 5,
+            borderColor: "#bdbdbd",
+            paddingHorizontal: 5,
+          }}
+        >
+          <Picker
+            selectedValue={category}
+            style={{}}
+            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}
+          >
+            <Picker.Item label="Select category" value="" />
+            <Picker.Item label="Fruits" value="Fruits" />
+            <Picker.Item label="Vegitables" value="Vegitables" />
+          </Picker>
+        </View>
 
         <TouchableOpacity onPress={handleAdd}>
           <Text

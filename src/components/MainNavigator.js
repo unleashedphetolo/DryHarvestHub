@@ -18,6 +18,7 @@ import Loading from "./Loading";
 import AddProduct from "../screens/AddProduct";
 import Payment from "../screens/Payment";
 import Orders from "../screens/Orders";
+import ProducerRegistration from "../screens/ProducerRegistration";
 
 // Create a stack navigator
 const Stack = createStackNavigator();
@@ -49,6 +50,8 @@ const MainNavigator = () => {
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="AddProduct" component={AddProduct} />
+            <Stack.Screen name="ProducerRegistration" component={ProducerRegistration} />
+
           </>
         ) : (
           <>

@@ -108,13 +108,49 @@ const Profile = ({ navigation }) => {
         <View
           style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 10 }}
         />
+<TouchableOpacity onPress={() => navigation.navigate("ProducerRegistration")}>
+<View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 15,
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: "white",
+              borderRadius: 5,
+            }}
+          >
+            <View style={{  marginTop: 15 }}>
+            <Ionicons name="document-attach-outline" size={28} color="black" />
+            </View>
+          </View>
 
+          <Text
+            style={{
+              paddingVertical: 3,
+              marginTop: 13,
+              marginRight: 200,
+            }}
+          >
+          Attachment
+          </Text>
+
+          
+            <View style={{ marginTop: 10, marginLeft: -20 }}>
+              <Ionicons name="chevron-forward" size={20} color="black" />
+            </View>
+          
+        </View>
+         </TouchableOpacity>
         <View
           style={{
             alignItems: "center",
             flexDirection: "row",
             justifyContent: "space-between",
-            marginTop: 20,
+            marginTop: 7,
           }}
         >
           <TouchableOpacity onPress={() => navigation.navigate("Orders")}>

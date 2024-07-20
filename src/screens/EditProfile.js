@@ -2,6 +2,8 @@ import { Text, TextInput, View, TouchableOpacity, Image } from "react-native";
 import React from "react";
 import constants from "expo-constants";
 import { Ionicons } from "@expo/vector-icons";
+import * as ImagePicker from "expo-image-picker";
+
 
 const EditProfile = ({navigation}) => {
   return (
