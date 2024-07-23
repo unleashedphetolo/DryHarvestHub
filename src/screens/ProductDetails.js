@@ -25,7 +25,7 @@ const ProductDetails = ({ route, navigation }) => {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            marginBottom:20
+            marginBottom: 20,
           }}
         >
           <TouchableOpacity onPress={() => navigation.goBack()}>
@@ -88,7 +88,7 @@ const ProductDetails = ({ route, navigation }) => {
           }}
         >
           {cart.some((item) => item.id == product.id)
-            ? "Got to cart"
+            ? "Go to cart"
             : "Add to cart"}
         </Text>
       </TouchableOpacity>

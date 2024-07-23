@@ -112,7 +112,7 @@ const AddProduct = ({ navigation }) => {
           >
             <Picker.Item label="Select category" value="" />
             <Picker.Item label="Fruits" value="Fruits" />
-            <Picker.Item label="Vegitables" value="Vegitables" />
+            <Picker.Item label="vegetables" value="vegetables" />
           </Picker>
         </View>
 
