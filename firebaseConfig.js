@@ -1,10 +1,9 @@
-import {initializeApp} from 'firebase/app';
-import 'firebase/auth'; 
-import 'firebase/firestore'; 
-import 'firebase/storage'; 
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  
   apiKey: "AIzaSyBmYkIej6ZC7JHdRI2-tVQAxm0s2sbpeLg",
   authDomain: "dryharvesthub.firebaseapp.com",
   projectId: "dryharvesthub",
@@ -14,7 +13,9 @@ const firebaseConfig = {
   measurementId: "G-S0T8LR37HR"
 };
 
-
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-export default app;
+export { app, auth, db, storage };

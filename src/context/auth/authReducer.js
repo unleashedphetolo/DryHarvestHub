@@ -6,6 +6,7 @@ import {
   LOGOUT,
   REGISTER,
   SET_USER,
+  UPDATE_PROFILE,
   USER_LOADING,
 } from "../types";
 
@@ -17,7 +18,6 @@ export default (state, action) => {
         loading: true,
       };
 
-      
     case USER_LOADING:
       return {
         ...state,
@@ -37,7 +37,14 @@ export default (state, action) => {
         ...state,
         userLoading: false,
         loading: false,
-        user: null
+        user: null,
+      };
+    case UPDATE_PROFILE:
+      return {
+        ...state,
+        userLoading: false,
+        loading: false,
+        profile: action.payload,
       };
 
     case REGISTER:

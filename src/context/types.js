@@ -17,3 +17,4 @@ export const ORDER = "ORDER";
 export const ADD_PRODUCT = "ADD_PRODUCT";
 export const GET_PRODUCER_PRODUCTS = "GET_PRODUCER_PRODUCTS";
 export const GET_ORDERS = "GET_ORDERS";
+export const UPDATE_PROFILE = "UPDATE_PROFILE";

@@ -12,6 +12,9 @@ import { FontAwesome6 } from "@expo/vector-icons";
 import AuthContext from "../context/auth/authContext";
 import ProducerProducts from "../screens/ProducerProducts";
 import ProducerRegistration from "../screens/ProducerRegistration";
+import Test from "../screens/Test";
+
+
 
 const Tab = createBottomTabNavigator();
 const TabNav = () => {

@@ -13,10 +13,13 @@ import {
   LOGOUT,
   REGISTER,
   SET_USER,
+  UPDATE_PROFILE,
   USER_LOADING,
 } from "../types";
 import { auth, db } from "../../firebase/config";
-import { collection, doc, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+const storage = getStorage();
 
 const AuthState = ({ children }) => {
   const initialState = {
@@ -78,6 +81,38 @@ const AuthState = ({ children }) => {
     }
   };
 
+  const updatePersonalInfo = async (id, info, navigation) => {
+    setAuthLoading();
+    try {
+      const update = {
+        name: info.name,
+        surname: info.surname,
+        bio: info.bio,
+      };
+
+      if (Object.keys(info.image).length) {
+        const imageRef = ref(
+          storage,
+          "images/" + new Date().valueOf() + "_" + info.image.name
+        );
+        const imageSnapShot = await uploadBytes(imageRef, info.image.blob);
+        update.image = await getDownloadURL(imageSnapShot.ref);
+      }
+
+      await updateDoc(doc(db, "profile", id), {
+        ...update,
+      });
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: { id, ...update },
+      });
+      navigation.goBack();
+    } catch (error) {
+      console.log(error);
+      dispatch({ type: AUTH_ERROR, payload: error });
+    }
+  };
+
   // Logout
   const logout = async () => {
     setAuthLoading();
@@ -131,6 +166,7 @@ const AuthState = ({ children }) => {
         setUserLoading,
         logout,
         login,
+        updatePersonalInfo,
       }}
     >
       {children}

@@ -6,12 +6,7 @@ import AuthContext from "../context/auth/authContext";
 import * as DocumentPicker from "expo-document-picker";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { addDoc, collection } from "firebase/firestore";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { Ionicons } from "@expo/vector-icons";
-
 const storage = getStorage();
-
-
 
 // Function to upload a document to Firebase Storage
 const uploadDocument = async (userId, document, folder) => {
@@ -145,32 +140,6 @@ const ProducerRegistration = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          flexDirection: "row",
-          // alignItems: "center",
-          // justifyContent: "space-between",
-        }}
-      >
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View>
-            <Ionicons name="arrow-back-outline" size={24} color="black" />
-          </View>
-        </TouchableOpacity>
-
-        <Text
-          style={{
-            color: "black",
-            marginRight: 26,
-            fontSize: 18,
-            fontWeight: "700",
-          }}
-        >
-          Profile
-        </Text>
-
-        <View />
-      </View>
       {/* <TextInput
         style={styles.input}
         placeholder="Email"
