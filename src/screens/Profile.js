@@ -1,354 +1,264 @@
-import { Text, View, TouchableOpacity, Image } from "react-native";
+import {
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  StyleSheet,
+  Linking,
+} from "react-native";
 import React, { useContext } from "react";
-import constants from "expo-constants";
-import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
+import Constants from "expo-constants";
+import { Ionicons, MaterialIcons } from "@expo/vector-icons";
 import AuthContext from "../context/auth/authContext";
+
 const Profile = ({ navigation }) => {
   const { logout, user } = useContext(AuthContext);
 
+  const handleEmail = () => {
+    const email = "info@hmpengineering.co.za";
+    const subject = "Assistance Needed";
+    const body = "Hi, I need assistance with...";
+    const mailto = `mailto:${email}?subject=${encodeURIComponent(
+      subject
+    )}&body=${encodeURIComponent(body)}`;
+
+    Linking.openURL(mailto).catch((err) =>
+      console.error("Error opening mail app", err)
+    );
+  };
+
   return (
-    <View
-      style={{
-        marginTop: constants.statusBarHeight,
-        padding: 20,
-        flex: 1,
-        backgroundColor: "white",
-      }}
-    >
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
+    <View style={styles.container}>
+      <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View>
-            <Ionicons name="arrow-back-outline" size={24} color="black" />
-          </View>
+          <Ionicons name="arrow-back-outline" size={24} color="black" />
         </TouchableOpacity>
-
-        <Text
-          style={{
-            color: "black",
-            marginRight: 26,
-            fontSize: 18,
-            fontWeight: "700",
-          }}
-        >
-          Profile
-        </Text>
-
+        <Text style={styles.headerTitle}>Profile</Text>
         <View />
       </View>
-      <View
-        style={{
-          backgroundColor: "white",
-          padding: 10,
-          marginTop: 30,
-          marginLeft: 130,
-          borderRadius: 5,
-        }}
-      >
+
+      <View style={styles.profileImageContainer}>
         <Image
           source={require("../../assets/profile.webp")}
-          style={{
-            width: 70,
-            height: 70,
-            borderRadius: 70,
-            borderWidth: 2,
-            borderColor: "#108437",
-          }}
+          style={styles.profileImage}
         />
       </View>
-      <Text
-        style={{
-          color: "black",
-          marginLeft: 122,
-          fontSize: 20,
-          fontWeight: "700",
-          marginTop: 8,
-        }}
-      >
-        {user?.name}
-      </Text>
-      <Text
-        style={{
-          textAlign: "center",
-          fontWeight: "700",
-          fontSize: 17,
-          color: "grey",
-        }}
-      >
-        {user?.email}
-      </Text>
-      <View
-        style={{ flexDirection: "row", alignItems: "center", marginLeft: 97 }}
-      >
+      <Text style={styles.userName}>{user?.name}</Text>
+      <Text style={styles.userEmail}>{user?.email}</Text>
+      <View style={styles.editProfileButtonContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
-          <Text
-            style={{
-              paddingVertical: 10,
-              paddingHorizontal: 30,
-              backgroundColor: "#108437",
-              color: "white",
-              fontSize: 18,
-              fontWeight: "800",
-              borderRadius: 9,
-              marginTop: 20,
-            }}
-          >
-            Edit Profile
-          </Text>
+          <Text style={styles.editProfileButton}>Edit Profile</Text>
         </TouchableOpacity>
       </View>
 
-      <View style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}>
-        <View
-          style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 10 }}
-        />
-<TouchableOpacity onPress={() => navigation.navigate("ProducerRegistration")}>
-<View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 15,
-          }}
+      <View style={styles.optionsContainer}>
+        <View style={styles.separator} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ProducerRegistration")}
         >
-          <View
-            style={{
-              backgroundColor: "white",
-              borderRadius: 5,
-            }}
-          >
-            <View style={{  marginTop: 15 }}>
-            <Ionicons name="document-attach-outline" size={28} color="black" />
-            </View>
-          </View>
-
-          <Text
-            style={{
-              paddingVertical: 3,
-              marginTop: 13,
-              marginRight: 200,
-            }}
-          >
-          Attachment
-          </Text>
-
-          
-            <View style={{ marginTop: 10, marginLeft: -20 }}>
-              <Ionicons name="chevron-forward" size={20} color="black" />
-            </View>
-          
-        </View>
-         </TouchableOpacity>
-         
-
-
-         <TouchableOpacity onPress={() => navigation.navigate("Test")}>
-<View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 15,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "white",
-              borderRadius: 5,
-            }}
-          >
-            <View style={{  marginTop: 15 }}>
-            <Ionicons name="document-attach-outline" size={28} color="black" />
-            </View>
-          </View>
-
-          <Text
-            style={{
-              paddingVertical: 3,
-              marginTop: 13,
-              marginRight: 200,
-            }}
-          >
-          Test
-          </Text>
-
-          
-            <View style={{ marginTop: 10, marginLeft: -20 }}>
-              <Ionicons name="chevron-forward" size={20} color="black" />
-            </View>
-          
-        </View>
-         </TouchableOpacity>
-
-
-
-
-
-        <View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 7,
-          }}
-        >
-          <TouchableOpacity onPress={() => navigation.navigate("Orders")}>
-          <View style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}>
-          <View
-            style={{
-              backgroundColor: "white",
-              borderRadius: 5,
-            }}
-          >
-            
-            <Image
-              source={require("../../assets/order.png")}
-              style={{ height: 26, width: 27, marginTop: 15 }}
-            />
-          </View>
-          <View>
-          <Text
-            style={{
-              paddingVertical: 3,
-              paddingHorizontal: 15,
-              marginTop: 12,
-              marginRight: 200,
-            }}
-          >
-            My Orders
-          </Text>
-          </View>
-          </View>
-         </TouchableOpacity>
-          <TouchableOpacity>
-            <View style={{ marginTop: 10 }}>
-              <Ionicons name="chevron-forward" size={20} color="black" />
-            </View>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "white",
-              borderRadius: 5,
-            }}
-          >
-            <Image
-              source={require("../../assets/address.jpg")}
-              style={{ height: 26, width: 27, marginTop: 15 }}
-            />
-          </View>
-
-          <Text
-            style={{
-              paddingVertical: 3,
-              paddingHorizontal: 15,
-              marginTop: 13,
-              marginRight: 200,
-            }}
-          >
-            Address
-          </Text>
-
-          <TouchableOpacity>
-            <View style={{ marginTop: 10 }}>
-              <Ionicons name="chevron-forward" size={20} color="black" />
-            </View>
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{ height: 3, backgroundColor: "#ECECEC", marginTop: 30 }}
-        />
-
-        <View
-          style={{
-            alignItems: "center",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginTop: 15,
-          }}
-        >
-          <View
-            style={{
-              backgroundColor: "white",
-              borderRadius: 5,
-            }}
-          >
-            <View style={{ height: 26, width: 27, marginTop: 15 }}>
-              <Ionicons name="help-circle-outline" size={26} color="black" />
-            </View>
-          </View>
-
-          <Text
-            style={{
-              paddingVertical: 3,
-              paddingHorizontal: 15,
-              marginTop: 13,
-              marginRight: 200,
-            }}
-          >
-            Help & Support
-          </Text>
-
-          <TouchableOpacity>
-            <View style={{ marginTop: 10, marginLeft: -20 }}>
-              <Ionicons name="chevron-forward" size={20} color="black" />
-            </View>
-          </TouchableOpacity>
-        </View>
-
+          <OptionItem
+            icon="document-attach-outline"
+            text="Attachment"
+            optionChevronStyle={styles.optionChevronAttachment}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Test")}>
+          <OptionItem
+            icon="document-attach-outline"
+            text="Test"
+            optionChevronStyle={styles.optionChevronTest}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Orders")}>
+          <OptionItem
+            image={require("../../assets/order.png")}
+            text="My Orders"
+            optionChevronStyle={styles.optionChevronOrders}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity>
+          <OptionItem
+            image={require("../../assets/address.jpg")}
+            text="Address"
+            optionChevronStyle={styles.optionChevronAddress}
+          />
+        </TouchableOpacity>
+        <View style={styles.separator} />
+        <TouchableOpacity onPress={handleEmail}>
+          <OptionItem
+            icon="help-circle-outline"
+            text="Help & Support"
+            optionChevronStyle={styles.optionChevronHelpSupport}
+          />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => logout()}>
-          <View
-            style={{
-              alignItems: "center",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              marginTop: 15,
-            }}
-          >
-            <View
-              style={{
-                backgroundColor: "white",
-                borderRadius: 5,
-              }}
-            >
-              <View style={{ height: 26, width: 27, marginTop: 15 }}>
-                <MaterialIcons name="logout" size={24} color="black" />
-              </View>
-            </View>
-
-            <Text
-              style={{
-                paddingVertical: 3,
-                paddingHorizontal: 15,
-                marginTop: 13,
-                marginRight: 235,
-              }}
-            >
-              Log out
-            </Text>
-          </View>
+          <OptionItem
+            iconFamily="MaterialIcons"
+            icon="logout"
+            text="Log out"
+            isLogout
+            optionChevronStyle={styles.optionChevronLogout}
+          />
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+const OptionItem = ({
+  iconFamily = "Ionicons",
+  icon,
+  image,
+  text,
+  isLogout,
+  optionChevronStyle,
+}) => {
+  const IconComponent =
+    iconFamily === "MaterialIcons" ? MaterialIcons : Ionicons;
+
+  return (
+    <View style={styles.optionItem}>
+      <View style={styles.optionIconContainer}>
+        {icon ? (
+          <IconComponent
+            name={icon}
+            size={26}
+            color="black"
+            style={styles.optionIcon}
+          />
+        ) : (
+          <Image source={image} style={styles.optionImage} />
+        )}
+      </View>
+      <Text style={[styles.optionText, isLogout && styles.logoutText]}>
+        {text}
+      </Text>
+      <Ionicons
+        name="chevron-forward"
+        size={20}
+        color="black"
+        style={[styles.optionChevron, optionChevronStyle]}
+      />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    marginTop: Constants.statusBarHeight,
+    padding: 20,
+    flex: 1,
+    backgroundColor: "white",
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  headerTitle: {
+    color: "black",
+    marginRight: 26,
+    fontSize: 18,
+    fontWeight: "700",
+  },
+  profileImageContainer: {
+    backgroundColor: "white",
+    padding: 10,
+    marginTop: 30,
+    marginLeft: "auto",
+    marginRight: "auto",
+    borderRadius: 5,
+  },
+  profileImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 70,
+    borderWidth: 2,
+    borderColor: "#108437",
+  },
+  userName: {
+    color: "black",
+    textAlign: "center",
+    fontSize: 20,
+    fontWeight: "700",
+    marginTop: 8,
+  },
+  userEmail: {
+    textAlign: "center",
+    fontWeight: "700",
+    fontSize: 17,
+    color: "grey",
+  },
+  editProfileButtonContainer: {
+    alignItems: "center",
+    marginTop: 20,
+  },
+  editProfileButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    backgroundColor: "#108437",
+    color: "white",
+    fontSize: 18,
+    fontWeight: "800",
+    borderRadius: 9,
+  },
+  optionsContainer: {
+    flex: 1,
+    paddingVertical: 30,
+  },
+  separator: {
+    height: 3,
+    backgroundColor: "#ECECEC",
+    marginTop: 10,
+  },
+  optionItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 15,
+  },
+  optionIconContainer: {
+    backgroundColor: "white",
+    borderRadius: 5,
+  },
+  optionIcon: {
+    marginTop: 15,
+  },
+  optionImage: {
+    height: 26,
+    width: 27,
+    marginTop: 15,
+  },
+  optionText: {
+    paddingVertical: 3,
+    paddingHorizontal: 15,
+    marginTop: 13,
+    marginRight: 200,
+  },
+  logoutText: {
+    marginRight: 235,
+  },
+  optionChevron: {
+  },
+  optionChevronAttachment: {
+    marginTop: 13,
+  },
+  optionChevronTest: {
+    marginTop: 13,
+  },
+  optionChevronOrders: {
+    marginTop: 13,
+  },
+  optionChevronAddress: {
+    marginTop: 13,
+  },
+  optionChevronHelpSupport: {
+    marginTop: 13,
+    marginHorizontal: -10,
+  },
+  optionChevronLogout: {
+    marginTop: 13,
+  },
+});
 
 export default Profile;

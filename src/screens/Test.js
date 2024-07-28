@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import * as DocumentPicker from "expo-document-picker";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { storage } from "../firebase/config"; // Importing firebase configuration
+import { storage } from "../firebase/config"; // Ensure your Firebase config is correctly set up
 
-const Test = () => {
+const Test = ({ navigation }) => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -22,7 +22,7 @@ const Test = () => {
       if (result.type === "success") {
         console.log("Document picked:", result);
         setSelectedFile(result);
-        uploadDocument(result);
+        await uploadDocument(result);
       }
     } catch (err) {
       console.log("Error picking document:", err);
@@ -31,6 +31,7 @@ const Test = () => {
 
   const uploadDocument = async (file) => {
     try {
+      console.log("Uploading document:", file);
       const response = await fetch(file.uri);
       const blob = await response.blob();
       const storageRef = ref(storage, `documents/${file.name}`);
@@ -46,10 +47,10 @@ const Test = () => {
         (error) => {
           console.error("Upload failed:", error);
         },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log("File available at:", downloadURL);
-          });
+        async () => {
+          const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+          console.log("File available at:", downloadURL);
+          // Here you can set the download URL to your state if needed
         }
       );
     } catch (error) {
