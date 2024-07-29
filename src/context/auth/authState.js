@@ -3,6 +3,7 @@ import AuthReducer from "./authReducer";
 import AuthContext from "./authContext";
 import {
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
@@ -12,6 +13,7 @@ import {
   LOGIN,
   LOGOUT,
   REGISTER,
+  RESET_PASSWORD,
   SET_USER,
   UPDATE_PROFILE,
   USER_LOADING,
@@ -150,6 +152,30 @@ const AuthState = ({ children }) => {
       });
   };
 
+  // Reset password
+  const resetPassword = (email, navigation) => {
+    setAuthLoading();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        console.log("Password reset email sent");
+        dispatch({ type: RESET_PASSWORD });
+        navigation.navigate("Login");
+      })
+      .catch((err) => {
+        if (err.code === "auth/user-not-found") {
+          console.error("well user not found");
+        }
+
+        if (err.code === "auth/invalid-email") {
+          console.error("That email address is invalid!");
+        }
+        if (err.code === "auth/missing-email") {
+          console.error("No email address is entered!");
+        }
+        dispatch({ type: AUTH_ERROR });
+      });
+  };
+
   // Set Loading
   const setAuthLoading = () => dispatch({ type: AUTH_LOADING });
   const setUserLoading = () => dispatch({ type: USER_LOADING });
@@ -167,6 +193,7 @@ const AuthState = ({ children }) => {
         logout,
         login,
         updatePersonalInfo,
+        resetPassword,
       }}
     >
       {children}

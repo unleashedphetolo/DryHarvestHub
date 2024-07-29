@@ -5,6 +5,7 @@ import {
   LOGIN,
   LOGOUT,
   REGISTER,
+  RESET_PASSWORD,
   SET_USER,
   UPDATE_PROFILE,
   USER_LOADING,
@@ -45,6 +46,11 @@ export default (state, action) => {
         userLoading: false,
         loading: false,
         profile: action.payload,
+      };
+    case RESET_PASSWORD:
+      return {
+        ...state,
+        loading: false,
       };
 
     case REGISTER:

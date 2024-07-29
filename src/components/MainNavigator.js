@@ -19,6 +19,8 @@ import AddProduct from "../screens/AddProduct";
 import Payment from "../screens/Payment";
 import Orders from "../screens/Orders";
 import ProducerRegistration from "../screens/ProducerRegistration";
+import ResetPassword from "../screens/ResetPassword";
+
 import Test from "../screens/Test";
 
 
@@ -59,6 +61,8 @@ const MainNavigator = () => {
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen name="ResetPassword" component={ResetPassword} />
+
             <Stack.Screen name="Register" component={Register} />
           </>
         )}

@@ -39,12 +39,18 @@ const Profile = ({ navigation }) => {
 
       <View style={styles.profileImageContainer}>
         <Image
-          source={require("../../assets/profile.webp")}
+          source={
+            user?.image
+              ? { uri: user?.image }
+              : require("../../assets/profile.webp")
+          }
           style={styles.profileImage}
         />
       </View>
       <Text style={styles.userName}>{user?.name}</Text>
       <Text style={styles.userEmail}>{user?.email}</Text>
+      <Text style={styles.userEmail}>{user?.bio}</Text>
+
       <View style={styles.editProfileButtonContainer}>
         <TouchableOpacity onPress={() => navigation.navigate("EditProfile")}>
           <Text style={styles.editProfileButton}>Edit Profile</Text>
@@ -238,8 +244,7 @@ const styles = StyleSheet.create({
   logoutText: {
     marginRight: 235,
   },
-  optionChevron: {
-  },
+  optionChevron: {},
   optionChevronAttachment: {
     marginTop: 13,
   },

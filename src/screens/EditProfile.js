@@ -19,8 +19,8 @@ const EditProfile = ({ navigation }) => {
   const { user, loading, updatePersonalInfo } = useContext(AuthContext);
 
   const [name, setName] = useState(user?.name);
-  const [surname, setSurname] = useState("");
-  const [bio, setBio] = useState("");
+  const [surname, setSurname] = useState(user?.surname);
+  const [bio, setBio] = useState(user?.bio);
   const [image, setImage] = useState({});
   const [hub, setHub] = useState(null); // Example: could be fetched from a profile API
 
@@ -65,7 +65,10 @@ const EditProfile = ({ navigation }) => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.profileImageContainer}>
-          <Image source={{ uri: image.uri }} style={styles.profileImage} />
+          <Image
+            source={{ uri: user?.image && image.url ? user?.image : image.uri }}
+            style={styles.profileImage}
+          />
           <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
             <Text style={styles.imageButtonText}>Choose Image</Text>
           </TouchableOpacity>

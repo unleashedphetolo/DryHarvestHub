@@ -1,23 +1,25 @@
 import React, { useContext, useState } from "react";
-import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import Constants from "expo-constants";
 import Input from "../components/Input";
 import AuthContext from "../context/auth/authContext";
 import TypeSelector from "../components/TypeSelector";
 
 const Login = ({ navigation }) => {
-  const { login, loading } = useContext(AuthContext);
+  const { resetPassword, loading } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [type, setType] = useState("Consumer");
 
   const handleLogin = () => {
-    const user = {
-      email,
-      password,
-    };
-    login(user, type);
+    resetPassword(email, navigation);
   };
 
   return (
@@ -35,8 +37,6 @@ const Login = ({ navigation }) => {
 
         <View style={styles.formContainer}>
           <Text style={styles.appName}>DryHarvestHub</Text>
-
-          <TypeSelector type={type} setType={setType} />
           <View style={styles.inputContainer}>
             <Input
               icon="mail-outline"
@@ -44,29 +44,17 @@ const Login = ({ navigation }) => {
               setValue={setEmail}
               value={email}
             />
-            <Input
-              icon="lock-closed-outline"
-              placeholder="Password"
-              setValue={setPassword}
-              value={password}
-              secureTextEntry={true}
-            />
-            <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
-            </TouchableOpacity>
           </View>
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleLogin}>
               <Text style={styles.loginButton}>
-                {loading ? "Loading..." : "Log In"}
+                {loading ? "Loading..." : "Reset Password"}
               </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-              <Text style={styles.registerText}>
-                Don't have an account? Register.
-              </Text>
+            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+              <Text style={styles.registerText}>Go back to Login.</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -115,12 +103,13 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   inputContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#F5F5F5",
     borderRadius: 5,
     marginVertical: 10,
     paddingHorizontal: 10,
+    paddingVertical: 20,
   },
   icon: {
     marginRight: 10,
@@ -156,8 +145,7 @@ const styles = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 255, 0.3)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
-  }
-  
+  },
 });
 
 export default Login;
