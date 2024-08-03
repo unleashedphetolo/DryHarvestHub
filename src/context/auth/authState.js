@@ -60,11 +60,10 @@ const AuthState = ({ children }) => {
 
   // Set User
   const setUser = async (user) => {
-    console.log(user);
     if (user) {
       const { email, uid } = user;
       const profile = await getDoc(doc(db, "profile", uid));
-      console.log(profile);
+
       if (profile.exists()) {
         console.log(profile.data());
         dispatch({
@@ -73,6 +72,7 @@ const AuthState = ({ children }) => {
             ...profile.data(),
             email,
             id: uid,
+            uid
           },
         });
       } else {

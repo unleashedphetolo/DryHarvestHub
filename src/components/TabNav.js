@@ -59,6 +59,7 @@ const TabNav = () => {
           }}
         />
       ) : null}
+      
       <Tab.Screen
         name="Cart"
         component={Cart}

@@ -1,6 +1,5 @@
-import { Text, TextInput, View, TouchableOpacity, Image } from "react-native";
-import React, { Component, useContext, useState } from "react";
-import constants from "expo-constants";
+import React, { useContext, useState } from "react";
+import { Text, View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppContext from "../context/app/appContext";
@@ -9,17 +8,33 @@ import AuthContext from "../context/auth/authContext";
 const CheckOut = ({ navigation }) => {
   const { user } = useContext(AuthContext);
   const { cart } = useContext(AppContext);
-  const [cardNumber, setCardNumber] = useState("");
-  const [exDate, setExDate] = useState("");
-  const [cvv, setCvv] = useState("");
-  const [name, setName] = useState(user.name);
-  const { order } = useContext(AppContext);
+  const [isDelivery, setIsDelivery] = useState(false); // State to track delivery option
+  const deliveryCharge = 150; // Charge for delivery
+  const [isCollect, setIsCollect] = useState(false); // State to track delivery option
 
+
+  const handleDeliveryOption = () => {
+    setIsCollect(false)
+    setIsDelivery(!isDelivery);
+  };
+
+  const handleCollectOption = () => {
+    setIsDelivery(false)
+    setIsCollect(!isCollect);
+  };
+  // Function to calculate total amount based on delivery option
+  const getTotalAmount = () => {
+    let total = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    if (isDelivery) {
+      total += deliveryCharge;
+    }
+    return total;
+  };
 
   return (
     <View
       style={{
-        marginTop: constants.statusBarHeight,
+        marginTop: 20,
         padding: 20,
         flex: 1,
         backgroundColor: "white",
@@ -33,13 +48,11 @@ const CheckOut = ({ navigation }) => {
         }}
       >
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <View>
-            <Ionicons name="arrow-back-outline" size={24} color="black" />
-          </View>
+          <Ionicons name="arrow-back-outline" size={24} color="black" />
         </TouchableOpacity>
 
         <Text style={{ color: "black", fontSize: 18, fontWeight: "700" }}>
-          CheckOut
+          Delivery Method 
         </Text>
 
         <View />
@@ -61,189 +74,100 @@ const CheckOut = ({ navigation }) => {
             fontSize: 20,
           }}
         >
-          Payment Method
+          Delivery Options
         </Text>
         <View
           style={{
             flexDirection: "row",
+            marginTop: 30,
             alignItems: "center",
-            justifyContent: "space-between",
           }}
         >
-          <View
-            style={{ flexDirection: "column", flex: 1, paddingVertical: 30 }}
+          <TouchableOpacity
+            onPress={handleDeliveryOption}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginRight: 10,
+            }}
           >
-            <View style={{ alignItems: "center", flexDirection: "row" }}>
-              <View
-                style={{
-                  backgroundColor: "white",
-                  borderRadius: 5,
-                }}
-              >
-                <Image
-                  source={require("../../assets/Mastercard-logo.svg.png")}
-                  style={{ height: 20, width: 27 }}
-                />
-              </View>
-
-              <Text style={{ paddingVertical: 3, paddingHorizontal: 15 }}>
-                Credit Card
-              </Text>
-            </View>
-            <View>
-              <Text
-                style={{
-                  marginTop: 15,
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  paddingVertical: 10,
-                  paddingHorizontal: 1,
-                }}
-              >
-                Name on Card
-              </Text>
-              <TextInput
-                style={{
-                  borderColor: "gray",
-                  borderWidth: 1,
-                  paddingHorizontal: 10,
-                  borderRadius: 5,
-                  padding: 10,
-                  borderWidth: 2,
-                  borderColor: "#bdbdbd",
-                }}
-                placeholder="Enter name"
-                onChangeText={(text) => setName(text)}
-                value={name}
-              />
-              <Text
-                style={{
-                  marginTop: 15,
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  paddingVertical: 10,
-                  paddingHorizontal: 1,
-                }}
-              >
-                Card Number
-              </Text>
-              <TextInput
-                style={{
-                  borderColor: "gray",
-                  borderWidth: 1,
-                  paddingHorizontal: 10,
-                  borderRadius: 5,
-                  padding: 10,
-                  borderWidth: 2,
-                  borderColor: "#bdbdbd",
-                }}
-                placeholder="Enter card number"
-                onChangeText={(text) => setCardNumber(text)}
-                value={cardNumber}
-              />
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  // justifyContent: "",
-                }}
-              >
-                <View style={{ flex: 1, marginRight: 15 }}>
-                  <Text
-                    style={{
-                      marginTop: 15,
-                      fontSize: 15,
-                      fontWeight: "bold",
-                      paddingVertical: 10,
-                      paddingHorizontal: 1,
-                    }}
-                  >
-                    Expiry Date
-                  </Text>
-                  <TextInput
-                    style={{
-                      borderColor: "gray",
-                      borderWidth: 1,
-                      paddingHorizontal: 10,
-                      borderRadius: 5,
-                      padding: 10,
-                      borderWidth: 2,
-                      borderColor: "#bdbdbd",
-                    }}
-                    placeholder="MM/YY"
-                    onChangeText={(text) => setExDate(text)}
-                    value={exDate}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  <Text
-                    style={{
-                      marginTop: 15,
-                      fontSize: 15,
-                      fontWeight: "bold",
-                      paddingVertical: 10,
-                      paddingHorizontal: 1,
-                    }}
-                  >
-                    Security Code
-                  </Text>
-                  <TextInput
-                    style={{
-                      width: "100%",
-                      borderColor: "gray",
-                      borderWidth: 1,
-                      paddingHorizontal: 10,
-                      borderRadius: 5,
-                      padding: 10,
-                      borderWidth: 2,
-                      borderColor: "#bdbdbd",
-                    }}
-                    placeholder="CVC"
-                    onChangeText={(text) => setCvv(text)}
-                    value={cvv}
-                  />
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  marginTop: 30,
-                }}
-              >
-                <MaterialCommunityIcons
-                  name="checkbox-marked-circle"
-                  size={24}
-                  color="green"
-                />
-                <Text
-                  style={{
-                    alignItems: "center",
-                    marginLeft: 10,
-                    fontWeight: "bold",
-                  }}
-                >
-                  My billing address is the same as my shipping address.
-                </Text>
-              </View>
-              < TouchableOpacity onPress={() => navigation.navigate("Payment", {cardNumber,exDate,cvv,name })}>
-                <Text
-                  style={{
-                    paddingVertical: 15,
-                    paddingHorizontal: 60,
-                    backgroundColor: "#108437",
-                    color: "white",
-                    fontSize: 18,
-                    fontWeight: "800",
-                    borderRadius: 5,
-                    marginTop: 120,
-                  }}
-                >
-                  Confirm and Continue
-                </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+            <MaterialCommunityIcons
+              name={
+                isDelivery
+                  ? "checkbox-marked-circle"
+                  : "checkbox-blank-circle-outline"
+              }
+              size={24}
+              color={isDelivery ? "green" : "#bdbdbd"}
+            />
+            <Text style={{ marginLeft: 10, fontWeight: "bold" }}>
+              Delivery (+R{deliveryCharge})
+            </Text>
+          </TouchableOpacity>
+       
         </View>
+
+        <View
+          style={{
+            flexDirection: "row",
+            marginTop: 30,
+            alignItems: "center",
+          }}
+        >
+          <TouchableOpacity
+            onPress={handleCollectOption}
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginRight: 10,
+            }}
+          >
+            <MaterialCommunityIcons
+              name={
+                isCollect
+                  ? "checkbox-marked-circle"
+                  : "checkbox-blank-circle-outline"
+              }
+              size={24}
+              color={isCollect ? "green" : "#bdbdbd"}
+            />
+            <Text style={{ marginLeft: 10, fontWeight: "bold" }}>
+              Collect ( Free )
+            </Text>
+          </TouchableOpacity>
+          
+        
+        </View>
+      </View>
+
+      <View>
+
+        <Text style={{  textAlign: "left", fontWeight:"bold" }}>
+            Total: R {getTotalAmount()}
+          </Text>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("Payment", {
+            isDelivery,
+          })
+        }
+      >
+        <Text
+          style={{
+            paddingVertical: 15,
+            paddingHorizontal: 60,
+            backgroundColor: "#108437",
+            color: "white",
+            fontSize: 18,
+            fontWeight: "800",
+            borderRadius: 5,
+            marginTop: 20,
+            textAlign: "center",
+          }}
+        >
+          Confirm and Continue
+        </Text>
+      </TouchableOpacity>
       </View>
     </View>
   );

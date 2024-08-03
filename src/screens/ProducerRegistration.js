@@ -5,7 +5,7 @@ import { Picker } from "@react-native-picker/picker";
 import AuthContext from "../context/auth/authContext";
 import * as DocumentPicker from "expo-document-picker";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
 const storage = getStorage();
 
 // Function to upload a document to Firebase Storage
@@ -32,8 +32,8 @@ const uploadDocument = async (userId, document, folder) => {
   }
 };
 
-const ProducerRegistration = ({navigation}) => {
-  const { user } = useContext(AuthContext);
+const ProducerRegistration = ({ navigation }) => {
+  const { user, setUser } = useContext(AuthContext);
   // State variables to store user input
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,9 +81,7 @@ const ProducerRegistration = ({navigation}) => {
       //   directorIdUrl,
       //   registrationFeeUrl,
       // });
-
-      await addDoc(producersCollection, {
-        name: user.name,
+      await updateDoc(doc(db, "profile", userId), {
         companyBankAccount,
         activity,
         product,
@@ -91,15 +89,26 @@ const ProducerRegistration = ({navigation}) => {
         foodSafetyUrl,
         directorIdUrl,
         registrationFeeUrl,
-        email: user.email,
       });
 
+      // await addDoc(producersCollection, {
+      //   name: user.name,
+      //   companyBankAccount,
+      //   activity,
+      //   product,
+      //   moiUrl,
+      //   foodSafetyUrl,
+      //   directorIdUrl,
+      //   registrationFeeUrl,
+      //   email: user.email,
+      // });
+
       // Alerting user upon successful registration
-      // Alert.alert(
-      //   "Registration Successful",
-      //   "Your registration is pending approval."
-      // );
-      navigation.navigate("Profile")
+      Alert.alert("Done", "The documents have been saved successfully", [
+        { text: "OK", onPress: () => setUser(user) },
+      ]);
+
+      // navigation.navigate("Profile")
     } catch (error) {
       // Alerting user in case of registration error
       Alert.alert("Registration Error", error.message);

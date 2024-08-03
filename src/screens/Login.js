@@ -1,5 +1,12 @@
 import React, { useContext, useState } from "react";
-import { View, Text, Image, ImageBackground, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  Image,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import Constants from "expo-constants";
 import Input from "../components/Input";
 import AuthContext from "../context/auth/authContext";
@@ -51,8 +58,10 @@ const Login = ({ navigation }) => {
               value={password}
               secureTextEntry={true}
             />
-            <TouchableOpacity onPress={() => navigation.navigate("ResetPassword")}>
-            <Text style={styles.forgotPassword}>Forgot Password?</Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ResetPassword")}
+            >
+              <Text style={styles.forgotPassword}>Forgot Password?</Text>
             </TouchableOpacity>
           </View>
 
@@ -115,9 +124,9 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
   inputContainer: {
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
+    flexDirection: "column",
+    alignItems: "center",
+    backgroundColor: "#F5F5F5",
     borderRadius: 5,
     marginVertical: 10,
     paddingHorizontal: 10,
@@ -156,8 +165,7 @@ const styles = StyleSheet.create({
     textShadowColor: "rgba(0, 0, 255, 0.3)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
-  }
-  
+  },
 });
 
 export default Login;

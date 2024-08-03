@@ -59,22 +59,18 @@ const Profile = ({ navigation }) => {
 
       <View style={styles.optionsContainer}>
         <View style={styles.separator} />
-        <TouchableOpacity
-          onPress={() => navigation.navigate("ProducerRegistration")}
-        >
-          <OptionItem
-            icon="document-attach-outline"
-            text="Attachment"
-            optionChevronStyle={styles.optionChevronAttachment}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("Test")}>
-          <OptionItem
-            icon="document-attach-outline"
-            text="Test"
-            optionChevronStyle={styles.optionChevronTest}
-          />
-        </TouchableOpacity>
+        {user?.type === "Producer" && (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("ProducerRegistration")}
+          >
+            <OptionItem
+              icon="document-attach-outline"
+              text="Attachment"
+              optionChevronStyle={styles.optionChevronAttachment}
+            />
+          </TouchableOpacity>
+        )}
+
         <TouchableOpacity onPress={() => navigation.navigate("Orders")}>
           <OptionItem
             image={require("../../assets/order.png")}
@@ -82,13 +78,13 @@ const Profile = ({ navigation }) => {
             optionChevronStyle={styles.optionChevronOrders}
           />
         </TouchableOpacity>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <OptionItem
             image={require("../../assets/address.jpg")}
             text="Address"
             optionChevronStyle={styles.optionChevronAddress}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <View style={styles.separator} />
         <TouchableOpacity onPress={handleEmail}>
           <OptionItem

@@ -23,7 +23,6 @@ import ResetPassword from "../screens/ResetPassword";
 
 import Test from "../screens/Test";
 
-
 // Create a stack navigator
 const Stack = createStackNavigator();
 
@@ -34,8 +33,9 @@ const MainNavigator = () => {
     setUserLoading();
     auth.onAuthStateChanged((user) => setUser(user));
   }, []);
-
   if (userLoading) return <Loading />;
+  if (user?.type === "Producer" && !user?.moiUrl)
+    return <ProducerRegistration />;
 
   return (
     <NavigationContainer>
@@ -54,9 +54,11 @@ const MainNavigator = () => {
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="AddProduct" component={AddProduct} />
-            <Stack.Screen name="ProducerRegistration" component={ProducerRegistration} />
+            <Stack.Screen
+              name="ProducerRegistration"
+              component={ProducerRegistration}
+            />
             <Stack.Screen name="Test" component={Test} />
-
           </>
         ) : (
           <>
