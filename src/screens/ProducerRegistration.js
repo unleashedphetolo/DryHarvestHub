@@ -1,11 +1,14 @@
 import React, { useContext, useState } from "react";
-import { View, TextInput, Button, Alert, StyleSheet, Text } from "react-native";
+import { View, TextInput, Button, Alert, StyleSheet, Text, TouchableOpacity } from "react-native";
 import app, { db } from "../firebase/config"; // Importing firebase configuration
 import { Picker } from "@react-native-picker/picker";
 import AuthContext from "../context/auth/authContext";
+import { Ionicons } from "@expo/vector-icons";
 import * as DocumentPicker from "expo-document-picker";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
-import { addDoc, collection, doc, updateDoc } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
+import Constants from "expo-constants";
+
 const storage = getStorage();
 
 // Function to upload a document to Firebase Storage
@@ -13,19 +16,12 @@ const uploadDocument = async (userId, document, folder) => {
   try {
     const imageRef = ref(
       storage,
-      ` documents/${folder}/${userId}/${document.name}`
+      `documents/${folder}/${userId}/${document.name}`
     );
 
     const imageSnapShot = await uploadBytes(imageRef, document);
     const imageDownloadURL = await getDownloadURL(imageSnapShot.ref);
     return imageDownloadURL;
-
-    const storageRef = app.storage().ref();
-    const documentRef = storageRef.child(
-      `documents/${folder}/${userId}/${document.name}`
-    );
-    await documentRef.put(document);
-    return documentRef.getDownloadURL(); // Returning the download URL of the uploaded document
   } catch (error) {
     console.error("Error uploading document:", error);
     throw error;
@@ -34,9 +30,6 @@ const uploadDocument = async (userId, document, folder) => {
 
 const ProducerRegistration = ({ navigation }) => {
   const { user, setUser } = useContext(AuthContext);
-  // State variables to store user input
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [companyBankAccount, setCompanyBankAccount] = useState("");
   const [activity, setActivity] = useState("Sell"); // Default activity is 'Sell'
   const [product, setProduct] = useState("Freshly harvested food"); // Default product
@@ -44,13 +37,9 @@ const ProducerRegistration = ({ navigation }) => {
   const [foodSafetyCertificate, setFoodSafetyCertificate] = useState(null);
   const [directorIdDocument, setDirectorIdDocument] = useState(null);
   const [registrationFeeDocument, setRegistrationFeeDocument] = useState(null);
-  const producersCollection = collection(db, "producers");
 
-  // Function to handle registration process
   const handleRegistration = async () => {
     try {
-      // Creating user with email and password using Firebase authentication
-      // const response = await app.auth().createUserWithEmailAndPassword(email, password);
       const userId = user.id;
 
       // Uploading required documents and getting their download URLs
@@ -71,16 +60,7 @@ const ProducerRegistration = ({ navigation }) => {
         "registration_fee"
       );
 
-      // Storing registration details in Firestore
-      // await db.collection("producers").doc(userId).set({
-      //   companyBankAccount,
-      //   activity,
-      //   product,
-      //   moiUrl,
-      //   foodSafetyUrl,
-      //   directorIdUrl,
-      //   registrationFeeUrl,
-      // });
+      // Updating user profile document
       await updateDoc(doc(db, "profile", userId), {
         companyBankAccount,
         activity,
@@ -91,24 +71,10 @@ const ProducerRegistration = ({ navigation }) => {
         registrationFeeUrl,
       });
 
-      // await addDoc(producersCollection, {
-      //   name: user.name,
-      //   companyBankAccount,
-      //   activity,
-      //   product,
-      //   moiUrl,
-      //   foodSafetyUrl,
-      //   directorIdUrl,
-      //   registrationFeeUrl,
-      //   email: user.email,
-      // });
-
-      // Alerting user upon successful registration
       Alert.alert("Done", "The documents have been saved successfully", [
         { text: "OK", onPress: () => setUser(user) },
       ]);
 
-      // navigation.navigate("Profile")
     } catch (error) {
       // Alerting user in case of registration error
       Alert.alert("Registration Error", error.message);
@@ -121,8 +87,6 @@ const ProducerRegistration = ({ navigation }) => {
       const document = await DocumentPicker.getDocumentAsync({
         type: "application/pdf",
       });
-
-      console.log(document, type);
 
       // Setting the corresponding document state based on the type
       switch (type) {
@@ -149,22 +113,16 @@ const ProducerRegistration = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={setEmail}
-        value={email}
-      />
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <Ionicons name="arrow-back-outline" size={24} color="black" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Producer Attachments</Text>
+      </View>
+
       <TextInput
         style={styles.input}
-        placeholder="Password"
-        onChangeText={setPassword}
-        value={password}
-        secureTextEntry // Secure text entry for password field
-      /> */}
-      <TextInput
-        style={styles.input}
-        placeholder="Company Bank Account Number"
+        placeholder="Enter the physical address of your company."
         onChangeText={setCompanyBankAccount}
         value={companyBankAccount}
       />
@@ -222,24 +180,38 @@ const ProducerRegistration = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
+    paddingTop: Constants.statusBarHeight,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    width: "100%",
+    paddingHorizontal: 20,
+    marginBottom: 20,
+  },
+  headerTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    color: "black",
   },
   input: {
+    width: "100%",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     padding: 10,
     marginBottom: 10,
-    width: "100%",
   },
   picker: {
+    width: "100%",
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
     marginBottom: 10,
-    width: "100%",
   },
   buttonContainer: {
     flexDirection: "row",
@@ -253,7 +225,6 @@ const styles = StyleSheet.create({
   },
   registerButton: {
     width: "100%",
-    marginTop: 10,
   },
 });
 
