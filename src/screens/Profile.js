@@ -16,7 +16,7 @@ const Profile = ({ navigation }) => {
 
   const handleEmail = () => {
     const email = "info@hmpengineering.co.za";
-    const subject = "Assistance Needed";
+    const subject = "DryHarvestHub, Assistance Needed";
     const body = "Hi, I need assistance with...";
     const mailto = `mailto:${email}?subject=${encodeURIComponent(
       subject

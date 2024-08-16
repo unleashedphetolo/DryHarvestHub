@@ -2,7 +2,7 @@ import { View, Text, TextInput } from "react-native";
 import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 
-const Input = ({ placeholder, icon, setValue, value,secureTextEntry }) => {
+const Input = ({ placeholder, icon, setValue, value, secureTextEntry }) => {
   return (
     <View
       style={{

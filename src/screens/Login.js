@@ -6,6 +6,9 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from "react-native";
 import Constants from "expo-constants";
 import Input from "../components/Input";
@@ -32,54 +35,61 @@ const Login = ({ navigation }) => {
       source={require("../../assets/DryFood.webp")}
       style={styles.backgroundImage}
     >
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../../assets/DryFoodLogo.jpg")}
-            style={styles.logo}
-          />
-        </View>
-
-        <View style={styles.formContainer}>
-          <Text style={styles.appName}>DryHarvestHub</Text>
-
-          <TypeSelector type={type} setType={setType} />
-          <View style={styles.inputContainer}>
-            <Input
-              icon="mail-outline"
-              placeholder="Email"
-              setValue={setEmail}
-              value={email}
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../../assets/DryFoodLogo.jpg")}
+              style={styles.logo}
             />
-            <Input
-              icon="lock-closed-outline"
-              placeholder="Password"
-              setValue={setPassword}
-              value={password}
-              secureTextEntry={true}
-            />
-            <TouchableOpacity
-              onPress={() => navigation.navigate("ResetPassword")}
-            >
-              <Text style={styles.forgotPassword}>Forgot Password?</Text>
-            </TouchableOpacity>
           </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleLogin}>
-              <Text style={styles.loginButton}>
-                {loading ? "Loading..." : "Log In"}
-              </Text>
-            </TouchableOpacity>
+          <View style={styles.formContainer}>
+            <Text style={styles.appName}>DryHarvestHub</Text>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Register")}>
-              <Text style={styles.registerText}>
-                Don't have an account? Register.
-              </Text>
-            </TouchableOpacity>
+            <TypeSelector type={type} setType={setType} />
+
+            <View style={styles.inputContainer}>
+              <Input
+                icon="mail-outline"
+                placeholder="Email"
+                setValue={setEmail}
+                value={email}
+              />
+              <Input
+                icon="lock-closed-outline"
+                placeholder="Password"
+                setValue={setPassword}
+                value={password}
+                secureTextEntry={true}
+              />
+              <TouchableOpacity
+                onPress={() => navigation.navigate("ResetPassword")}
+              >
+                <Text style={styles.forgotPassword}>Forgot Password?</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity onPress={handleLogin}>
+                <Text style={styles.loginButton}>
+                  {loading ? "Loading..." : "Log In"}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+                <Text style={styles.registerText}>
+                  Don't have an account? Register.
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
@@ -93,6 +103,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: Constants.statusBarHeight,
     padding: 20,
+
     flex: 1,
   },
   logoContainer: {
@@ -107,9 +118,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   formContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: "white",
     flex: 1,
     marginTop: 10,
+    marginBottom: 130,
     borderRadius: 10,
     padding: 20,
   },
@@ -131,14 +143,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     paddingHorizontal: 10,
   },
-  icon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    height: 40,
-    fontSize: 16,
-  },
   forgotPassword: {
     color: "blue",
     paddingVertical: 10,
@@ -159,10 +163,10 @@ const styles = StyleSheet.create({
   registerText: {
     textAlign: "center",
     marginTop: 10,
-    color: "white",
+    color: "blue",
     fontWeight: "bold",
     fontSize: 16,
-    textShadowColor: "rgba(0, 0, 255, 0.3)",
+    textShadowColor: "#FFFFFF",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },

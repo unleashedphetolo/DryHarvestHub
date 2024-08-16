@@ -6,13 +6,16 @@ import {
   ImageBackground,
   StyleSheet,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
 } from "react-native";
 import Constants from "expo-constants";
 import Input from "../components/Input";
 import AuthContext from "../context/auth/authContext";
 import TypeSelector from "../components/TypeSelector";
 
-const Login = ({ navigation }) => {
+const ResetPassword = ({ navigation }) => {
   const { resetPassword, loading } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
@@ -27,38 +30,44 @@ const Login = ({ navigation }) => {
       source={require("../../assets/DryFood.webp")}
       style={styles.backgroundImage}
     >
-      <View style={styles.container}>
-        <View style={styles.logoContainer}>
-          <Image
-            source={require("../../assets/DryFoodLogo.jpg")}
-            style={styles.logo}
-          />
-        </View>
-
-        <View style={styles.formContainer}>
-          <Text style={styles.appName}>DryHarvestHub</Text>
-          <View style={styles.inputContainer}>
-            <Input
-              icon="mail-outline"
-              placeholder="Email"
-              setValue={setEmail}
-              value={email}
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -500}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../../assets/DryFoodLogo.jpg")}
+              style={styles.logo}
             />
           </View>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleLogin}>
-              <Text style={styles.loginButton}>
-                {loading ? "Loading..." : "Reset Password"}
-              </Text>
-            </TouchableOpacity>
+          <View style={styles.formContainer}>
+            <Text style={styles.appName}>DryHarvestHub</Text>
+            <View style={styles.inputContainer}>
+              <Input
+                icon="mail-outline"
+                placeholder="Email"
+                setValue={setEmail}
+                value={email}
+              />
+            </View>
 
-            <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-              <Text style={styles.registerText}>Go back to Login.</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity onPress={handleLogin}>
+                <Text style={styles.loginButton}>
+                  {loading ? "Loading..." : "Reset Password"}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+                <Text style={styles.registerText}>Go back to Login.</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 };
@@ -86,9 +95,10 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   formContainer: {
-    backgroundColor: "transparent",
+    backgroundColor: "white",
     flex: 1,
     marginTop: 10,
+    marginBottom: 240,
     borderRadius: 10,
     padding: 20,
   },
@@ -109,7 +119,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginVertical: 10,
     paddingHorizontal: 10,
-    paddingVertical: 20,
   },
   icon: {
     marginRight: 10,
@@ -139,13 +148,13 @@ const styles = StyleSheet.create({
   registerText: {
     textAlign: "center",
     marginTop: 10,
-    color: "white",
+    color: "blue",
     fontWeight: "bold",
     fontSize: 16,
-    textShadowColor: "rgba(0, 0, 255, 0.3)",
+    textShadowColor: "#FFFFFF",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 2,
   },
 });
 
-export default Login;
+export default ResetPassword;
