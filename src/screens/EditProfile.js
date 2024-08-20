@@ -134,6 +134,8 @@ const styles = StyleSheet.create({
   headerTitle: {
     color: "black",
     fontSize: 18,
+    marginRight: 28,
+
     fontWeight: "700",
   },
   scrollView: {

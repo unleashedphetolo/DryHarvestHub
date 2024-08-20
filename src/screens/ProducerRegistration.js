@@ -1,9 +1,18 @@
 import React, { useContext, useState } from "react";
-import { View, TextInput, Button, Alert, StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  Alert,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import app, { db } from "../firebase/config"; // Importing firebase configuration
 import { Picker } from "@react-native-picker/picker";
 import AuthContext from "../context/auth/authContext";
 import { Ionicons } from "@expo/vector-icons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import * as DocumentPicker from "expo-document-picker";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { updateDoc, doc } from "firebase/firestore";
@@ -30,18 +39,19 @@ const uploadDocument = async (userId, document, folder) => {
 
 const ProducerRegistration = ({ navigation }) => {
   const { user, setUser } = useContext(AuthContext);
-  const [companyBankAccount, setCompanyBankAccount] = useState("");
-  const [activity, setActivity] = useState("Sell"); // Default activity is 'Sell'
-  const [product, setProduct] = useState("Freshly harvested food"); // Default product
+  const [companyAddress, setcompanyAddress] = useState("");
+  const [activity, setActivity] = useState("Sell");
+  const [product, setProduct] = useState("Freshly harvested food");
   const [moiDocument, setMoiDocument] = useState(null);
   const [foodSafetyCertificate, setFoodSafetyCertificate] = useState(null);
   const [directorIdDocument, setDirectorIdDocument] = useState(null);
   const [registrationFeeDocument, setRegistrationFeeDocument] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleRegistration = async () => {
     try {
       const userId = user.id;
-
+      setLoading(true);
       // Uploading required documents and getting their download URLs
       const moiUrl = await uploadDocument(userId, moiDocument, "moi");
       const foodSafetyUrl = await uploadDocument(
@@ -62,7 +72,7 @@ const ProducerRegistration = ({ navigation }) => {
 
       // Updating user profile document
       await updateDoc(doc(db, "profile", userId), {
-        companyBankAccount,
+        companyAddress,
         activity,
         product,
         moiUrl,
@@ -74,10 +84,11 @@ const ProducerRegistration = ({ navigation }) => {
       Alert.alert("Done", "The documents have been saved successfully", [
         { text: "OK", onPress: () => setUser(user) },
       ]);
-
+      setLoading(false);
     } catch (error) {
       // Alerting user in case of registration error
-      Alert.alert("Registration Error", error.message);
+      Alert.alert("Please upload your documents", "Incomplete Registration");
+      setLoading(false);
     }
   };
 
@@ -123,8 +134,8 @@ const ProducerRegistration = ({ navigation }) => {
       <TextInput
         style={styles.input}
         placeholder="Enter the physical address of your company."
-        onChangeText={setCompanyBankAccount}
-        value={companyBankAccount}
+        onChangeText={setcompanyAddress}
+        value={companyAddress}
       />
       <Picker
         selectedValue={activity}
@@ -145,33 +156,42 @@ const ProducerRegistration = ({ navigation }) => {
         />
       </Picker>
       <View style={styles.buttonContainer}>
-        <View style={styles.uploadButton}>
-          <Button
-            title="Upload MOI Document"
-            onPress={() => handleDocumentUpload("moi")}
-          />
-        </View>
-        <View style={styles.uploadButton}>
-          <Button
-            title="Upload Food Safety Certificate"
-            onPress={() => handleDocumentUpload("foodSafety")}
-          />
-        </View>
-        <View style={styles.uploadButton}>
-          <Button
-            title="Upload Director ID Document"
-            onPress={() => handleDocumentUpload("directorId")}
-          />
-        </View>
-        <View style={styles.uploadButton}>
-          <Button
-            title="Upload Registration Fee Document"
-            onPress={() => handleDocumentUpload("registrationFee")}
-          />
-        </View>
-      </View>
-      <View style={styles.registerButton}>
-        <Button title="Register" onPress={handleRegistration} />
+        <TouchableOpacity onPress={() => handleDocumentUpload("moi")}>
+          <View style={styles.uploadButton}>
+            <Text style={styles.buttonText}>Upload MOI Document</Text>
+            <FontAwesome5 name="file-upload" size={24} color="white" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleDocumentUpload("foodSafety")}>
+          <View style={styles.uploadButton}>
+            <Text style={styles.buttonText}>
+              Upload Food Safety Certificate
+            </Text>
+            <FontAwesome5 name="file-upload" size={24} color="white" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => handleDocumentUpload("directorId")}>
+          <View style={styles.uploadButton}>
+            <Text style={styles.buttonText}>Upload Director ID Document</Text>
+            <FontAwesome5 name="file-upload" size={24} color="white" />
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleDocumentUpload("registrationFee")}
+        >
+          <View style={styles.uploadButton}>
+            <Text style={styles.buttonText}>
+              Upload Registration Fee Document
+            </Text>
+            <FontAwesome5 name="file-upload" size={24} color="white" />
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleRegistration}>
+          <Text style={styles.registerButton}>
+            {loading ? "Loading..." : "Register"}
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -180,7 +200,7 @@ const ProducerRegistration = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "flex-start",
+    // justifyContent: "flex-start",
     alignItems: "center",
     paddingHorizontal: 20,
     paddingTop: Constants.statusBarHeight,
@@ -188,13 +208,16 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     width: "100%",
     paddingHorizontal: 20,
+    marginRight: 46,
     marginBottom: 20,
+    marginTop: 20,
   },
   headerTitle: {
     fontSize: 18,
+    marginLeft: 66,
     fontWeight: "700",
     color: "black",
   },
@@ -214,18 +237,43 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
     width: "100%",
     marginBottom: 20,
   },
   uploadButton: {
-    flex: 1,
-    marginHorizontal: 5,
+    backgroundColor: "#108437",
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: "center",
+    alignSelf: "center",
+    color: "white",
+    padding: 1,
+    fontWeight: "800",
+    textAlign: "center",
+    width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+  },
+  buttonText: {
+    color: "white",
+    padding: 15,
+    fontWeight: "800",
+    textAlign: "center",
   },
   registerButton: {
-    width: "100%",
+    backgroundColor: "#19bd50",
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: "center",
+    alignSelf: "center",
+    padding: 40,
+    color: "white",
+    padding: 15,
+    fontWeight: "800",
+    textAlign: "center",
+    width: "50%",
   },
 });
-
 export default ProducerRegistration;

@@ -38,7 +38,7 @@ const Login = ({ navigation }) => {
       <KeyboardAvoidingView
         style={styles.container}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -200}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -50}
       >
         <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={styles.logoContainer}>
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
   registerText: {
     textAlign: "center",
     marginTop: 10,
-    color: "blue",
+    color: "#1f1fab",
     fontWeight: "bold",
     fontSize: 16,
     textShadowColor: "#FFFFFF",
