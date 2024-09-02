@@ -74,7 +74,7 @@ const EditProfile = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View style={styles.inputContainer}>
-          <Text style={styles.inputLabel}>Full Name</Text>
+          <Text style={styles.inputLabel}>Name</Text>
           <TextInput
             style={styles.textInput}
             placeholderTextColor="black"

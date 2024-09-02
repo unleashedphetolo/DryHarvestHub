@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import AppContext from "./appContext";
 import {
   ADD_PRODUCT,
+  ADD_DOCUMENT,
   ADD_TO_CART,
   APP_ERROR,
   DECREMENT_QUANTITY,
@@ -12,6 +13,7 @@ import {
   ORDER,
   ORDERS_LOADING,
   PRODUCTS_LOADING,
+  DOCUMENTS_LOADING,
   REMOVE_CART_ITEM,
 } from "../types";
 import AppReducer from "./appReducer";
@@ -26,6 +28,7 @@ const AppState = ({ children }) => {
     products: [],
     producerProducts: [],
     productsLoading: false,
+    documentsLoading: false,
     cart: [],
     orders: [],
   };
@@ -113,6 +116,43 @@ const AppState = ({ children }) => {
     }
   };
 
+// Producer Registration
+const documentUpload = async (user, navigation) => {
+  setDocumentsLoading();
+  try {
+    const documentRef = ref(
+      storage,
+      "documents/" + new Date().valueOf() + "_" + user.document.name
+    );
+
+    const documentSnapShot = await uploadBytes(documentRef, user.document.blob);
+    const documentDownloadURL = await getDownloadURL(documentSnapShot.ref);
+
+    await addDoc(productsCollection, {
+      ...user,
+      document: documentDownloadURL,
+    });
+    dispatch({
+      type: ADD_DOCUMENT,
+      payload: {
+        ...user,
+        document: documentDownloadURL,
+      },
+    });
+    navigation.navigate("Main");
+  } catch (error) {
+    console.log(error);
+    dispatch({ type: APP_ERROR, payload: error.message });
+  }
+};
+
+
+
+
+
+
+
+
   const createProduct = async (product, navigation) => {
     setProductsLoading();
     try {
@@ -143,6 +183,7 @@ const AppState = ({ children }) => {
   };
   // Set Loading
   const setProductsLoading = () => dispatch({ type: PRODUCTS_LOADING });
+  const setDocumentsLoading = () => dispatch({ type: DOCUMENTS_LOADING});
   const setOrdersLoading = () => dispatch({ type: ORDERS_LOADING });
 
   return (
@@ -161,6 +202,7 @@ const AppState = ({ children }) => {
         decrementQuantity,
         order,
         createProduct,
+        documentUpload,
         getProducerProducts,
         getOrders,
       }}

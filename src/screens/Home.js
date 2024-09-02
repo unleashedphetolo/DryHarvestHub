@@ -35,13 +35,13 @@ const Home = ({ navigation }) => {
   const filteredProducts = products.filter((product) => {
     const inCategory =
       selectedCategory === "All" ||
-      (selectedCategory.toLowerCase() === "fruits" &&
-        product.category.toLowerCase() === "fruits") ||
-      (selectedCategory.toLowerCase() === "vegetables" &&
-        product.category.toLowerCase() === "vegetables");
+      (selectedCategory?.toLowerCase() === "fruits" &&
+        product?.category?.toLowerCase() === "fruits") ||
+      (selectedCategory?.toLowerCase() === "vegetables" &&
+        product?.category?.toLowerCase() === "vegetables");
     return (
       inCategory &&
-      product.title.toLowerCase().includes(searchText.toLowerCase())
+      product?.title?.toLowerCase()?.includes(searchText.toLowerCase())
     );
   });
 

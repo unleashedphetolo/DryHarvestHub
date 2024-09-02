@@ -17,20 +17,27 @@ import * as DocumentPicker from "expo-document-picker";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import { updateDoc, doc } from "firebase/firestore";
 import Constants from "expo-constants";
+import * as FileSystem from "expo-file-system";
 
 const storage = getStorage();
 
 // Function to upload a document to Firebase Storage
 const uploadDocument = async (userId, document, folder) => {
   try {
-    const imageRef = ref(
+    const documentRef = ref(
       storage,
       `documents/${folder}/${userId}/${document.name}`
     );
 
-    const imageSnapShot = await uploadBytes(imageRef, document);
-    const imageDownloadURL = await getDownloadURL(imageSnapShot.ref);
-    return imageDownloadURL;
+    // Fetch the file as a blob
+    const response = await fetch(document.uri);
+    const blob = await response.blob();
+
+    // Upload the Blob directly to Firebase Storage
+    const documentSnapShot = await uploadBytes(documentRef, blob);
+    const documentDownloadURL = await getDownloadURL(documentSnapShot.ref);
+
+    return documentDownloadURL;
   } catch (error) {
     console.error("Error uploading document:", error);
     throw error;
@@ -49,6 +56,8 @@ const ProducerRegistration = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const handleRegistration = async () => {
+    console.log("uploading");
+
     try {
       const userId = user.id;
       setLoading(true);
@@ -158,30 +167,43 @@ const ProducerRegistration = ({ navigation }) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity onPress={() => handleDocumentUpload("moi")}>
           <View style={styles.uploadButton}>
-            <Text style={styles.buttonText}>Upload MOI Document</Text>
-            <FontAwesome5 name="file-upload" size={24} color="white" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleDocumentUpload("foodSafety")}>
-          <View style={styles.uploadButton}>
             <Text style={styles.buttonText}>
-              Upload Food Safety Certificate
+              {moiDocument ? moiDocument?.name : "Upload MOI Document"}
             </Text>
             <FontAwesome5 name="file-upload" size={24} color="white" />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => handleDocumentUpload("directorId")}>
+
+        <TouchableOpacity onPress={() => handleDocumentUpload("foodSafety")}>
           <View style={styles.uploadButton}>
-            <Text style={styles.buttonText}>Upload Director ID Document</Text>
+            <Text style={styles.buttonText}>
+              {foodSafetyCertificate
+                ? foodSafetyCertificate?.name
+                : "Upload Food Safety Certificate"}
+            </Text>
             <FontAwesome5 name="file-upload" size={24} color="white" />
           </View>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => handleDocumentUpload("directorId")}>
+          <View style={styles.uploadButton}>
+            <Text style={styles.buttonText}>
+              {directorIdDocument
+                ? directorIdDocument?.name
+                : "Upload Director ID Document"}
+            </Text>
+            <FontAwesome5 name="file-upload" size={24} color="white" />
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           onPress={() => handleDocumentUpload("registrationFee")}
         >
           <View style={styles.uploadButton}>
             <Text style={styles.buttonText}>
-              Upload Registration Fee Document
+              {registrationFeeDocument
+                ? registrationFeeDocument?.name
+                : "Upload Registration Fee Document"}
             </Text>
             <FontAwesome5 name="file-upload" size={24} color="white" />
           </View>
