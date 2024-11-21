@@ -15,7 +15,7 @@ const Profile = ({ navigation }) => {
   const { logout, user } = useContext(AuthContext);
 
   const handleEmail = () => {
-    const email = "info@hmpengineering.co.za";
+    const email = "phetolo@hmpengineering.co.za";
     const subject = "DryHarvestHub, Assistance Needed";
     const body = "Hi, I need assistance with...";
     const mailto = `mailto:${email}?subject=${encodeURIComponent(
